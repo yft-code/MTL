@@ -40,6 +40,7 @@ export default {
         getCPUData(){
             this.$codePost("/expertCompatibility/get_cpu_ladder/", { operation: "获取CPU天梯数据", failed: true }).then(res => {
                 if (res.code == 200) {
+                    console.log('Get CPU Ladder Data Success');
                     this.max_level = res.data.max_level 
                     this.handleCPUData(res.data.data)
                     this.handleCpuBrand(res.data.brand)

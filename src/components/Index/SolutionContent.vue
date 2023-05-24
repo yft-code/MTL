@@ -42,7 +42,7 @@
 </template>
 
 <script>
-
+//    import {getUserEmail} from  "@/api/profile"
     export default {
         components: {
         },
@@ -111,6 +111,9 @@
             
         },
         created(){
+            // getUserEmail({}).then(res=>{
+            //     console.log('youccccc',res);
+            // })
         },
         mounted(){
             
@@ -128,6 +131,9 @@
         watch:{
         },
         methods:{
+            getUserEmail(res){
+                     console.log('1233444youccccc',res);
+            },
             // 切换当前方案
             changecurSolutionType(type) {
                 this.curSolutionType = type;
