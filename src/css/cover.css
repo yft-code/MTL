@@ -1,0 +1,39 @@
+.cover-div .plat-title {
+    font-weight: bold;
+    color: #3e7beb;
+    font-size: 18px;
+}
+.cover-div .type-item {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+.cover-div .type-item .type-title {
+    width: 10rem;
+    margin-right: 1rem;
+    font-weight: bold;
+    vertical-align: top;
+    display: inline-block;
+}
+.cover-div .type-item .type-content {
+    width: 52rem;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.cover-div .type-item .type-content .every-coverage {
+    width: 17rem;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cover-div .type-item .type-content .coverage-state {
+     font-weight: bold;
+    font-size: 18px;
+}
+
+.cover-div .type-item .type-content .every-coverage .coverage-state {
+    margin-left: 0.5rem;
+    font-weight: bold;
+    font-size: 18px;
+}

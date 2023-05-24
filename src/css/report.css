@@ -1,0 +1,127 @@
+.report-detail .back-page {
+    color: #666;
+}
+.report-detail .back-page>.el-icon-arrow-left {
+    margin: 0 3px;
+}
+.report-detail .back-page>.page-span {
+    cursor: pointer;
+}
+.report-detail .detail-main {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 12px 0px #e1e1e1;
+    border-radius: 5px;
+    padding: 1rem;
+}
+.report-detail .gray-div {
+    width: 100%;
+    background-color: #fafbfc;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+.report-detail .circle-text-item{
+    text-align: center;
+    width: 7rem;
+    height: 5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1rem;
+    color: rgb(102, 102, 102);
+    font-size: 16px;
+    padding-top: 2rem;
+}
+
+.menu-and-slider {
+    width: 100%;
+    height: 454px;
+    margin-top: 1rem;
+    border: 1px solid #eaecf4;
+}
+.menu-and-slider-header {
+    line-height: 40px;
+    background-color: #e7e9ee;
+    color: #333333;
+}
+.menu-and-slider-header>.menu-title {
+    display: inline-block;
+    width: 17%;
+    text-align: center;
+}
+.menu-and-slider-header .slider-title {
+    display: inline-block;
+    width: 83%;
+    text-align: center;
+}
+.menu-and-slider .menu-div {
+    display: inline-block;
+    width: 17%;
+    vertical-align: top;
+    max-height: 413px;
+    overflow-y: auto;
+}
+.menu-and-slider>.slider-div {
+    display: inline-block;
+    width: 83%;
+    height: 413px;
+    background-color: #fafbfc;
+    vertical-align: top;
+    border-left: 1px solid #eaecf4;
+}
+.menu-and-slider .tips-div {
+    position: absolute;
+    width: 3px;
+    height: 40px;
+    background-color: #3e71fd;
+}
+.menu-and-slider .menu-item {
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+.menu-and-slider .choosed-menu {
+    background-color: #F2F4F9;
+}
+.menu-and-slider .menu-item .menu-item-span {
+    width: 100%;
+    height: 40px;
+    padding-left: 30px;
+    cursor: pointer;
+    line-height: 40px;
+    color: #333333;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.menu-and-slider .menu-item .menu-item-span .select-item {
+    color: #3e71fd;
+}
+
+.q-level-icon {
+    margin-left: 1px;
+    width: 12px;
+    height: 12px;
+}
+.theme-red {
+    color: #ff557d;
+}
+.theme-green {
+    color: #00b67c;
+}
+.card-content-div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.red-tip {
+    color: #F56C6C;
+    font-size: 12px;
+}
+.gray-span {
+    color: #333333;
+}

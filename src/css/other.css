@@ -1,0 +1,74 @@
+/*el-radio选中时有奇怪的光影效果，将其去除*/
+.el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+    box-shadow: none;
+}
+.container {
+    width: 90%;
+    min-width: 1200px;
+    margin: 2rem auto;
+}
+.deep-container {
+    width: 1200px;
+    margin: 2rem auto;
+}
+.blue-span {
+    color: #4876f2;
+}
+.blue-a {
+    color: #4876f2;
+    cursor: pointer;
+}
+.search-input { 
+    display: inline-block;
+    width: 17.5rem;
+}
+.search-input .el-input__inner {
+    width: 100%;
+    border-radius: 1.5rem;
+}
+.el-button.is-circle.circle-icon {
+    padding:0.3rem;
+}
+.el-button.is-circle.circle-icon>i {
+    font-weight: bold;
+    font-size: 1rem;
+}
+/*弹框选项中，确认、取消按钮换位，使取消按钮在右边（符合mtl规范）*/
+.el-message-box__btns button,
+.el-time-panel .el-time-panel__footer button {
+    float: right;
+    margin-left: 0.5rem;
+}
+.image-icon {
+    display: inline-block;
+    width: 1rem;
+    cursor: pointer;
+}
+.confirm-icon {
+    color: orange;
+    font-size: 2rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.center-and-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*el-table中，可sort的列表头和不可sort的对不齐*/
+.el-table .el-table__header-wrapper th:not(.is-sortable) .cell,
+.el-table .el-table__fixed-header-wrapper th:not(.is-sortable) .cell {
+    padding: 4px 0 7px 0;
+}
+
+.edit-icon {
+    color: #4876F2;   
+    font-weight: bold;
+    height: 20px;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 2px;
+    margin-top: 3px;
+}

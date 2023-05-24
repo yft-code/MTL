@@ -1,0 +1,23 @@
+.public-model .el-dialog { 
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+.public-model .el-dialog__header {
+    background-color: #f0f1f2;
+    border-radius: 5px;
+    padding: 15px 20px 15px;
+}
+.public-model .el-dialog__title {
+    color: #666666;
+}
+.public-model .el-dialog__headerbtn, 
+.public-model .el-dialog__headerbtn { 
+    top: 1rem;
+}
+.public-dialog-form-item {
+    color: rgba(48, 49, 51, 0.6);
+    margin-bottom: 1rem;
+}
+.public-dialog-form-item .el-form-item__label {
+    color: rgba(48, 49, 51, 0.6);
+}
