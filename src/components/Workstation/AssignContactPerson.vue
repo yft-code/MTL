@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {getReminder} from '@/api/workStation/common'
+import {getReminder,getQaList} from '@/api/workStation/common'
     export default {
         components: {
         },
@@ -140,12 +140,11 @@ import {getReminder} from '@/api/workStation/common'
         },
         methods:{
             //获取qa列表
-            getQaList() {
-                this.$codePost("/service/get_qa_list/").then(res => {
+            async getQaList() {
+             let res=await getQaList({},{})
                     if (res.code == 200) {
                         this.qaList = res.data;
                     }
-                })
             },
 
             async getCurrentContactPerson(){

@@ -36,6 +36,7 @@
     </div>
 </template>
 <script>
+import {getQaList} from '@/api/workStation/common'
 import formRule from "@/utils/formRule.js"
 export default {
     components: {
@@ -71,13 +72,12 @@ export default {
     methods: {
 
         // 获取测试人员信息
-        getQaList() {
-            this.$codePost("/service/get_qa_list/").then(res => {
+        async getQaList() {
+          let res=await getQaList({},{})
                 // console.log(res)
                 if (res.code == 200) {
                     this.testerOption = res.data;
                 }
-            })
         },
 
         confirmEditPatchMission(){

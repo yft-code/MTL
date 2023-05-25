@@ -185,6 +185,7 @@ import CompareOrder from '@/components/StartTest/Performance/CompareOrder'
 import Sortable from 'sortablejs'
 import TransferMission from '@/components/StartTest/Performance/TransferMission'
 import {getExpertGroup} from '@/api/profile.js'
+import {getQaList} from '@/api/workStation/common'
 export default {
     components: {
         SceneTable,
@@ -413,12 +414,11 @@ export default {
             this.$refs.workTimeRef.openDialog();
         },
         // 获取测试人员信息
-        getQaList() {
-            this.$codePost("/service/get_qa_list/").then(res => {
+       async getQaList() {
+          let res=await getQaList({},{}) 
                 if (res.code == 200) {
                     this.testerOption = res.data;
                 }
-            })
         },
         transferMission(scene, device){
             this.$refs.transferMissionRef.openDialog(scene, device);

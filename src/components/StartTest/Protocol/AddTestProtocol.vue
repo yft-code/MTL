@@ -41,6 +41,7 @@
 </template>
 <script>
 import formRule from "@/utils/formRule.js"
+import {getQaList} from '@/api/workStation/common'
 import SelfDialog from "@/components/Common/SelfDialog.vue"
 import ProtocolTable from '@/components/StartTest/Protocol/ProtocolTable'
 export default {
@@ -135,12 +136,11 @@ export default {
         },
 
         // 获取测试人员信息
-        getQaList() {
-            this.$codePost("/service/get_qa_list/").then(res => {
+       async getQaList() {
+          let res=await getQaList({},{})
                 if (res.code == 200) {
                     this.testerOption = res.data;
                 }
-            })
         },
 
         addTestProtocol() {

@@ -282,6 +282,8 @@
 import SelfTable from "@/components/Common/SelfTable.vue"
 import SelfPopo from "@/components/Common/SelfPopo.vue"
 import SendReport from '@/components/Common/SendReport.vue'
+import {getTestApply} from '@/api/workStation/ServiceOrdersList'
+import { getReminder,getQaList} from '@/api/workStation/common'
     export default {
         components: {
             SelfTable,
@@ -431,7 +433,7 @@ import SendReport from '@/components/Common/SendReport.vue'
                 this.testTypeShow = !this.testTypeShow
             },
 
-            testTypeChange(val){
+        testTypeChange(val){
                 let list = {
                     page: 1,
                     rows: 10,
@@ -441,6 +443,7 @@ import SendReport from '@/components/Common/SendReport.vue'
                     test_type: val
                 }
                 this.$codePost('/service/get_test_apply/', list, { operation: "获取数据", failed: true }).then(res => {
+                    console.log('ddsdadadsad');
                     if (res.code == 200) {
                         this.tableData = res.data.res
                         this.total = res.data.res_num
@@ -580,13 +583,12 @@ import SendReport from '@/components/Common/SendReport.vue'
                 this.workTimeDialogVisible = false
             },
 
-            getQaList() {
-                this.$codePost("/service/get_qa_list/").then(res => {
+           async getQaList() {
+              let res= await getQaList({},{})
                     // console.log(res)
                     if (res.code == 200) {
                         this.testerOption = res.data;
                     }
-                })
             },
 
 

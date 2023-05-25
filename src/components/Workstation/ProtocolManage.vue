@@ -41,7 +41,7 @@
 </template>
 
 <script>
-
+import {getQaList} from '@/api/workStation/common'
     export default {
         components: {
         },
@@ -211,13 +211,12 @@
         },
         methods:{
 
-            getProtocolList(){
+          async  getProtocolList(){
                 // this.$store.dispatch('getProtocolList')
-                this.$codePost("/service/get_qa_list/").then(res => {
+             let res=await getQaList({},{})
                     if (res.code == 200) {
                         console.log(res.data)
                     }
-                })
             },
         },
     }

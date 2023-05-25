@@ -309,7 +309,7 @@ import SendReport from "./SendReport"
 import SelfPopo from './SelfPopo.vue'
 import SelfPersonSelect from './SelfPersonSelect.vue'
 import {getListData} from '@/api/workStation/selfTable'
-import {getReminder} from '@/api/workStation/common'
+import {getReminder,getQaList} from '@/api/workStation/common'
 export default {
     components: {
         EditPicture,
@@ -586,13 +586,11 @@ export default {
         },
 
         //获取qa列表
-        getQaList() {
-            // console.log(1)
-            this.$codePost("/service/get_qa_list/").then(res => {
+        async  getQaList() {
+        let res =await getQaList({},{})
                 if (res.code == 200) {
                     this.qaList = res.data;
                 }
-            })
         },
         cancel(){
             this.current_row.test_status = '1'

@@ -80,6 +80,7 @@
 import formRule from "@/utils/formRule.js"
 import SelfDialog from "@/components/Common/SelfDialog.vue"
 import MissionTable from '@/components/StartTest/Common/MissionTable'
+import {getQaList} from '@/api/workStation/common'
 export default {
     components: {
         SelfDialog,
@@ -175,13 +176,11 @@ export default {
         },
 
         // 获取测试人员信息
-        getQaList() {
-            this.$codePost("/service/get_qa_list/").then(res => {
-                // console.log(res)
+        async getQaList() {
+         let res= getQaList({},{})
                 if (res.code == 200) {
                     this.testerOption = res.data;
                 }
-            })
         },
 
         close(){
