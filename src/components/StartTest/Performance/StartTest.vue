@@ -184,6 +184,7 @@ import EditColumn from '@/components/StartTest/Performance/EditColumn'
 import CompareOrder from '@/components/StartTest/Performance/CompareOrder'
 import Sortable from 'sortablejs'
 import TransferMission from '@/components/StartTest/Performance/TransferMission'
+import {getExpertGroup} from '@/api/common.js'
 export default {
     components: {
         SceneTable,
@@ -220,22 +221,7 @@ export default {
             tableList: [],
             // 存储基本列数据，是为了避免自定义列发生变化重载列数据时操作列重复添加
             basicColumnData:[
-                // {
-                //     titleName: '测试时间',
-                //     propName: 'date',
-                //     type: "normal",
-                //     width: "100px"
-                // },
-                // {
-                //     titleName: '软件名称',
-                //     propName: 'app_name',
-                //     type: "normal",
-                // },
-                // {
-                //     titleName: '测试机',
-                //     propName: 'device_name',
-                //     type: "normal",
-                // },
+
                 {
                     titleName: '操作',
                     propName: 'opration',
@@ -295,13 +281,7 @@ export default {
                     titleName: '冷启动时间',
                     propName: 'cold_start_used',
                     type: "normal",
-                },
-                // {
-                //     titleName: 'Pease链接',
-                //     propName: 'pease_link',
-                //     type: "normal",
-                // },
-                
+                },       
             ],
             editSceneTempForm: {
                 project: '',
@@ -447,21 +427,6 @@ export default {
             this.$refs.compareRef.openDialog()
         },
         getFieldList(){
-            // this.$codePost("/mobilePerfTest/get_pease_field_inflect/").then(res => {
-            //     if(res.code == "200"){
-            //         this.fieldList = res.data
-            //         let basicColumnData = []
-            //         for(let k in this.fieldList){
-            //             basicColumnData.push({
-            //                 titleName: k,
-            //                 propName: this.fieldList[k],
-            //                 type: "normal",
-            //             })
-            //         }
-                    
-            //         this.basicColumnData = basicColumnData
-            //     }
-            // })
             this.basicColumnData = this.performanceFiledList
         },
 
@@ -719,9 +684,9 @@ export default {
             this.$refs.editSceneTempRef.openDialog();
         },
 
-        // 获取项目组数据
+        // 获取项目组数据--带有数据提示
         async getProject() {
-            let res = await this.$codePost("/expertCompatibility/get_expert_group/", {}, { operation: "获取项目组数据", failed: true });
+            let res = await getExpertGroup({}, { operation: "获取项目组数据", failed: true });
             if (res.code == 200) {
                 this.projectClassifyArr = res.data;
             }

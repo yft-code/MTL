@@ -25,13 +25,8 @@ axios.interceptors.response.use(response => {
 	// 对响应数据做点什么
 	return response
 }, err => {
+	// 对请求错误做些什么
 	return Promise.reject(err.response);
-	// // 后端返回401则重定向到openid登录页面
-    // if (err.response && err.response.status === 401) {
-    //     return location.replace(`http://qa.leihuo.netease.com:9714/qaweblogin/login?redirect=${encodeURIComponent(location.href)}`)
-    // } else {
-    //     return Promise.reject(err.response);
-    // }
 })
 
 // 封装get方法和post方法
@@ -67,40 +62,55 @@ export function get(url, params) {
  * @param {String} url [请求的url地址] 
  * @param {Object} params [请求时携带的参数] 
  */
-export function post(url, params, callback, specialMessageCodes = [], requestType = '') {
+export function post(url, params,messageList,requestType = '') {
 	return new Promise((resolve, reject) => {
-		axios.post(url, requestType === 'formData' ? params : qs.stringify(params))
+		let response = {};
+		axios.post(url, requestType === 'formData' ? params : qs.stringify(params),requestType === 'formData' ? {
+            headers:{
+                "Content-Type": "multipart/form-data"
+            }
+        }:'')
 			.then(res => {
-				// 请求成功状态码为200，返回请求数据
 				if(res.data.code === 200) {
-					callback(res)
-					if (requestType === 'formData') {
-						resolve(true)
-					}
+					resolve(res.data)
+					// Message.success(messageList.operation + "成功！");
 				} else {
-					if (specialMessageCodes.indexOf(res.data.code) === -1 && requestType !== 'getFrameScreenshot') {
-						if(res.data.msg) {
-							Message({
-								message: res.data.msg,
-								type: 'error'
-							})
-						} else if(res.data) {
-							Message({
-								message: res.data,
-								type: 'error'
-							})
-						}
-					}
-					resolve(res)
+					Message({
+						message: res.data.msg,
+						type: 'error'
+					})
 				}
+				response = res.data;
 			})
 			.catch(err => {
-				if (requestType === 'getFrameScreenshot') {
-					resolve(err)
-				}else {
-					reject(err);
+				reject(err.response)
+			}).finally(()=>{
+				if (JSON.stringify(messageList) !== '{}') {
+					codePostMessage(response, messageList);
 				}
 			})
 	})
 }
-  
+// 公共的提示信息
+function codePostMessage(response, messageList) {
+    if (response.code == "200") {
+        //操作成功时
+        if (messageList.success) {
+            //需要成功提示
+            if (messageList.successText != undefined) {
+                //成功定制了特殊提示
+                Message.success(messageList.successText);
+            } else {
+                //通用成功提示
+                Message.success(messageList.operation + "成功！");
+            }
+        }
+    } else if (response.code == "Unlogin") {
+        console.log("cookie失效");
+    } else {
+        //操作失败时
+        if (messageList.failed) {
+            Message.error(response.msg);
+        }
+    }
+}

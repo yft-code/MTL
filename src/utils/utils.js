@@ -18,7 +18,7 @@ Utils.install = function(Vue, options){
 Utils.codePost = function (url, list, messageList) {
     return this.$Utils.post("", url, list, messageList);
 }
-
+// type:是否为表单提交，url：请求地址，list：请求参数，messageList：需要信息提示的请求
 Utils.post = function (type, url, list, messageList) {
     let headers = {};
     if (type != "form") {
@@ -29,6 +29,7 @@ Utils.post = function (type, url, list, messageList) {
     return new Promise(resolve => {
         let response = {};
         axios.post(url, list, headers).then(res => {
+            console.log('loginRes',res);
             if (res.data == "Unlogin") {
                 response = {
                     code: "Unlogin",

@@ -104,6 +104,7 @@ import EditTestDevice from '@/components/StartTest/Weaknet/EditTestDevice'
 import AddTestContent from '@/components/StartTest/Weaknet/AddTestContent'
 import CheckTestDevice from '@/components/StartTest/Weaknet/CheckTestDevice'
 import CheckConclusion from '@/components/StartTest/Weaknet/CheckConclusion'
+import {getExpertGroup} from '@/api/common.js'
 export default {
     components: {
         SceneTable,
@@ -346,7 +347,7 @@ export default {
 
         // 获取项目组数据
         async getProject() {
-            let res = await this.$codePost("/expertCompatibility/get_expert_group/", {}, { operation: "获取项目组数据", failed: true });
+            let res = await getExpertGroup({}, { operation: "获取项目组数据", failed: true });
             if (res.code == 200) {
                 this.projectClassifyArr = res.data;
             }

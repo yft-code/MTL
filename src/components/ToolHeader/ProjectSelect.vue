@@ -11,6 +11,7 @@
 
 <script>
 import SelfCascader from '@/components/Common/SelfCascader.vue'
+import { getExpertGroup } from '@/api/common.js'
 import $ from "jquery"
 export default {
     data() {
@@ -38,10 +39,9 @@ export default {
         },
 
         //获取项目组数据
-        async getProject() {
-            // console.log(0)
-            let res = await this.$codePost("/expertCompatibility/get_expert_group/", {}, { operation: "获取项目组数据", failed: true });
-            if (res.code == 200) {
+        async getProject(){
+            let res=await getExpertGroup({},{operation: "获取项目组数据", failed: true })
+              if (res.code == 200) {
                 this.projectClassifyArr = res.data;
                 if (this.projectClassifyArr.length == 0) {
                     this.$store.commit("setNoProject", true);

@@ -12,10 +12,6 @@ selfAxios.install = function (Vue, options) {
 
 //{code:"",msg:"",data:""}
 selfAxios.codePost = function (url, list, messageList) {
-    // console.log(0)
-    // console.log("url----",url)
-    // console.log("list----",list)
-    // console.log("messageList----",messageList)
     return this.$selfAxios.post("", url, list, messageList);
 }
 

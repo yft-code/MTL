@@ -99,6 +99,7 @@ import EditSceneTemp from '@/components/StartTest/PerformancePC/EditSceneTemp'
 import EditTestDevice from '@/components/StartTest/PerformancePC/EditTestDevice'
 import AddTestContent from '@/components/StartTest/WeaknetPC/AddTestContent'
 import TestConclusion from '@/components/StartTest/WeaknetPC/TestConclusion'
+import {getExpertGroup} from '@/api/common.js'
 export default {
     components: {
         SceneTable,
@@ -335,7 +336,7 @@ export default {
 
         // 获取项目组数据
         async getProject() {
-            let res = await this.$codePost("/expertCompatibility/get_expert_group/", {}, { operation: "获取项目组数据", failed: true });
+            let res = await getExpertGroup({}, { operation: "获取项目组数据", failed: true });
             if (res.code == 200) {
                 this.projectClassifyArr = res.data;
             }
