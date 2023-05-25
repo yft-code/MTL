@@ -1,80 +1,7 @@
-// import axios from 'axios'
-// import api from '../../api.config'
-// import qs from 'qs'
-// import {
-// 	Message,
-// } from 'element-ui'
-// const service = axios.create({
-//     baseURL: api.baseURL,
-//     timeout: 90000
-//   })
-  
-//   // 请求方法处理
-//   service.interceptors.request.use(
-//     config => {
-//       // if(router.currentRoute.name=='agent'){
-   
-//       // } else {
-//       //   router.replace('/')
-//       // }
-//       // }
-//       return config
-//     },
-//     error => {
-//       // do something with request error
-//       console.log(error) // for debug
-//       return Promise.reject(error)
-//     }
-//   )
-  
-//   // 返回响应处理
-//   service.interceptors.response.use(
-//     response => {
-//       const res = response.data
-//       console.log('response', res)
-//       return res
-//     //   if (res.code !== 0) {
-//     //     // 后台返回的报错
-//     //     if (res.message && res.message.indexOf('用户名或密码') > -1) {
-//     //       router.replace('/')
-//     //     } else if (res.code === 403) {
-//     //       router.replace('/')
-//     //       Message({
-//     //         message: res.message,
-//     //         type: 'error',
-//     //         duration: 5 * 1000
-//     //       })
-//     //     }else if(res.code === 401) {
-//     //       router.replace('/')
-//     //     } else {
-//     //       Message({
-//     //         message: res.message,
-//     //         type: 'error',
-//     //         duration: 5 * 1000
-//     //       })
-//     //     }
-//     //     return Promise.reject(new Error(res.message || 'Error'))
-//     //   } else {
-//     //     return res
-//     //   }
-//     },
-//     error => {
-//       console.log('error' + error.response.status) // for debug
-//       if( error.response.status === 401){
-//         router.replace('/')
-//       }else{
-//         return Promise.reject(error)
-//       }
-//     }
-//   )
-  
-//   export default service
 import axios from 'axios'
 import api from '../../api.config'
 import qs from 'qs'
-import {
-	Message,
-} from 'element-ui'
+import {Message} from 'element-ui'
 
 // 这里没有环境切换所以项目发布时添加相应的接口域名即可
 axios.defaults.baseURL = api.baseURL 
@@ -83,7 +10,6 @@ axios.defaults.timeout = 960000
 
 // 设置post请求头
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
-
 // 请求拦截
 axios.interceptors.request.use(config => {
 	// 在发送请求之前做些什么 验证token之类的
@@ -99,12 +25,13 @@ axios.interceptors.response.use(response => {
 	// 对响应数据做点什么
 	return response
 }, err => {
-	// 后端返回401则重定向到openid登录页面
-    if (err.response && err.response.status === 401) {
-        return location.replace(`http://qa.leihuo.netease.com:9714/qaweblogin/login?redirect=${encodeURIComponent(location.href)}`)
-    } else {
-        return Promise.reject(err.response);
-    }
+	return Promise.reject(err.response);
+	// // 后端返回401则重定向到openid登录页面
+    // if (err.response && err.response.status === 401) {
+    //     return location.replace(`http://qa.leihuo.netease.com:9714/qaweblogin/login?redirect=${encodeURIComponent(location.href)}`)
+    // } else {
+    //     return Promise.reject(err.response);
+    // }
 })
 
 // 封装get方法和post方法
