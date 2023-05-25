@@ -308,7 +308,8 @@ import EditPicture from "./EditPicture"
 import SendReport from "./SendReport"
 import SelfPopo from './SelfPopo.vue'
 import SelfPersonSelect from './SelfPersonSelect.vue'
-import {getListData} from '@/api/common/selfTable'
+import {getListData} from '@/api/workStation/selfTable'
+import {getReminder} from '@/api/workStation/common'
 export default {
     components: {
         EditPicture,
@@ -495,14 +496,13 @@ export default {
                 }
             })
         },
-        getDefaultQa(){
-            this.$codePost("/service/get_reminder/").then(res => {
+       async  getDefaultQa(){
+          let res=await getReminder({},{})
                 if (res.code == 200) {
                     for(let k in res.data){
                         this.qaObject[k].popo = res.data[k].popo.split(',')
                     }
                 }
-            })
         },
         // 申请详情页查看报告
         viewReport(item) {

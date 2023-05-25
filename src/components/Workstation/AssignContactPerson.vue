@@ -36,7 +36,7 @@
 </template>
 
 <script>
-
+import {getReminder} from '@/api/workStation/common'
     export default {
         components: {
         },
@@ -148,15 +148,14 @@
                 })
             },
 
-            getCurrentContactPerson(){
-                this.$codePost("/service/get_reminder/").then(res => {
+            async getCurrentContactPerson(){
+              let res= await getReminder({},{})
                     if (res.code == 200) {
                         for(let k in res.data){
                             this.qaObject[k].popo = res.data[k].popo.split(',')
                             this.qaObject[k].name = res.data[k].name.split(',')
                         }
                     }
-                })
             },
 
             changeTester(item){

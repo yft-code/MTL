@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import {getReminder} from '@/api/workStation/common'
 import formRule from "@/utils/formRule.js"
 export default {
     props: {
@@ -117,12 +118,11 @@ export default {
     },
     methods: {
         // 获取开单配置网页的负责人邮箱
-        getIssuesPrincipal(){
-             this.$codePost("/service/get_reminder/").then(res => {
+      async  getIssuesPrincipal(){
+        let res= await  getReminder({},{})
                 if(res.code == 200){
                     this.issuesPrincipal = res.data.billing_platform_reminder.popo;
                 }
-            })
         },
 
         //获取项目组选项

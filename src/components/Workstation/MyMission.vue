@@ -212,7 +212,6 @@ export default {
         },
         //获取申请记录
         getTestRecord() {
-            console.log('dgashjdgahsjgdadghsgd');
             this.lastSearchValue = this.tableAxiosList.key;
             this.$refs.recordTableRef.tableKeyList.page = 1;
             this.$refs.recordTableRef.getTableData();
