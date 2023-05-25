@@ -1,10 +1,10 @@
-import {get,post} from '@/utils/request'
-// 获取邮箱
+import {get} from '@/utils/request'
+// 获取用户邮箱
 export function getEmail(param) {
   return get('/service/get_user_email/',param)
 }
 // 获取用户权限
-export function getPermission(param) {
+export function getUserAuth(param) {
     return get('/service/get_user_auth/',param)
 }
 
