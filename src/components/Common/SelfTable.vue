@@ -308,6 +308,7 @@ import EditPicture from "./EditPicture"
 import SendReport from "./SendReport"
 import SelfPopo from './SelfPopo.vue'
 import SelfPersonSelect from './SelfPersonSelect.vue'
+import {getListData} from '@/api/common/selfTable'
 export default {
     components: {
         EditPicture,
@@ -690,7 +691,7 @@ export default {
         },
 
         //获取表格数据
-        getTableData() {
+         async getTableData() {
             this.isLoading = true;
             let list = JSON.parse(JSON.stringify(this.axiosList));
             let sortKeyName = "sort";
@@ -708,7 +709,7 @@ export default {
             }
             list.test_type = this.testTypeValue
             if(this.tableList.postAppPrefix){
-                this.$codePost('/'+ this.tableList.postAppPrefix +'/' + this.tableList.postApp + '/', list, { operation: "获取数据", failed: true }).then(res => {
+               let res= await getListData('/'+ this.tableList.postAppPrefix +'/' + this.tableList.postApp + '/', list, { operation: "获取数据", failed: true })
                     if (res.code == 200) {
                         if (this.tableList.tableTotalKey != undefined) {
                             this.tableData = res.data[this.tableList.tableDataKey];
@@ -718,18 +719,18 @@ export default {
                                 //如果表格数据为空，且当前不是第一页，切换到第一页
                                 this.tableKeyList.page = 1;
                                 this.getTableData();
+                                  this.isLoading = false
                             }else{
-                                this.afterGetTable(res.data);
+                             this.afterGetTable(res.data);
                             }
                         } else {
                             this.tableData = res[this.tableList.tableDataKey];
                             this.afterGetTable(res.data);
                         }
                     }
-                })
                 this.isLoading = true;
             }else{
-                this.$codePost('/service/' + this.tableList.postApp + '/', list, { operation: "获取数据"}).then(res => {
+                let res=await getListData('/service/' + this.tableList.postApp + '/', list, { operation: "获取数据"})
                     if (res.code == 200) {
                         if (this.tableList.tableTotalKey != undefined) {
                             this.tableData = res.data[this.tableList.tableDataKey];
@@ -747,8 +748,7 @@ export default {
                             this.afterGetTable(res.data);
                         }
                     }
-                })
-                this.isLoading = true;
+                // this.isLoading = true;
             }
         },
 

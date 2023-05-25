@@ -99,7 +99,7 @@ import EditSceneTemp from '@/components/StartTest/PerformancePC/EditSceneTemp'
 import EditTestDevice from '@/components/StartTest/PerformancePC/EditTestDevice'
 import AddTestContent from '@/components/StartTest/WeaknetPC/AddTestContent'
 import TestConclusion from '@/components/StartTest/WeaknetPC/TestConclusion'
-import {getExpertGroup} from '@/api/common.js'
+import {getExpertGroup} from '@/api/profile.js'
 export default {
     components: {
         SceneTable,

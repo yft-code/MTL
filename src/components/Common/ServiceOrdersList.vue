@@ -419,7 +419,7 @@ import SendReport from '@/components/Common/SendReport.vue'
         },
         methods:{
             async getDefaultQa(){
-                let res = await this.$codePost("/service/get_reminder/")
+                let res = await getReminder({},{})
                 if (res.code == 200) {
                     for(let k in res.data){
                         this.qaObject[k].popo = res.data[k].popo ? res.data[k].popo.split(',') : []

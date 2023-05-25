@@ -11,7 +11,7 @@
 
 <script>
 import SelfCascader from '@/components/Common/SelfCascader.vue'
-import { getExpertGroup } from '@/api/common.js'
+import { getExpertGroup } from '@/api/profile.js'
 import $ from "jquery"
 export default {
     data() {

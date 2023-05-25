@@ -184,7 +184,7 @@ import EditColumn from '@/components/StartTest/Performance/EditColumn'
 import CompareOrder from '@/components/StartTest/Performance/CompareOrder'
 import Sortable from 'sortablejs'
 import TransferMission from '@/components/StartTest/Performance/TransferMission'
-import {getExpertGroup} from '@/api/common.js'
+import {getExpertGroup} from '@/api/profile.js'
 export default {
     components: {
         SceneTable,

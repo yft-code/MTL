@@ -104,7 +104,7 @@ import EditTestDevice from '@/components/StartTest/Weaknet/EditTestDevice'
 import AddTestContent from '@/components/StartTest/Weaknet/AddTestContent'
 import CheckTestDevice from '@/components/StartTest/Weaknet/CheckTestDevice'
 import CheckConclusion from '@/components/StartTest/Weaknet/CheckConclusion'
-import {getExpertGroup} from '@/api/common.js'
+import {getExpertGroup} from '@/api/profile.js'
 export default {
     components: {
         SceneTable,
