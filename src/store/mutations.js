@@ -1,5 +1,3 @@
-// 往state里面存数据
-import state from "./state";
 const mutations={
   setCurId(state,data){
       state.curId = data

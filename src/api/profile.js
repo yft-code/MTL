@@ -1,6 +1,6 @@
 import {get} from '@/utils/request'
 // 获取用户邮箱
-export function getEmail(param) {
+export function getUserEmail(param) {
   return get('/service/get_user_email/',param)
 }
 // 获取用户权限

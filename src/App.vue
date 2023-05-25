@@ -17,7 +17,6 @@
             
         },
         mounted(){
-             console.log('store',this.$store);
         },
         created(){
         },
