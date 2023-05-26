@@ -1,12 +1,5 @@
 <template>
     <div class="self-table">   
-        <!-- <el-table
-            :data="currentPageData"
-            style="width: 100%"
-            stripe
-            border
-            :header-cell-style="{ backgroundColor: '#e7e9ee', color: '#414350', textAlign: 'center' }"
-            > -->
         <el-table
             :data="tableData"
             style="width: 100%"

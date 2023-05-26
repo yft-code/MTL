@@ -1,8 +1,8 @@
+// 查看接口人
 <template>
     <div class="workstation-content">
         <div class="list-title">{{ isAdmin ? '分配服务接口人' : '查看服务接口人' }}</div>
         <div class="list-container">
-            <!-- {{qaList}} -->fgfgdgd
             <el-form label-width="220px" label-suffix="：">
                 <el-form-item v-for="item,i in testTypeOption" :label="item.label" :key="i">
                     <el-select 
@@ -150,8 +150,15 @@ import {getReminder,getQaList} from '@/api/workStation/common'
               let res= await getReminder({},{})
                     if (res.code == 200) {
                         for(let k in res.data){
+                            if(!this.qaObject[k]){
+                                this.qaObject[k] = {
+                                    name: [],
+                                    popo: [],
+                                }
+                            } 
                             this.qaObject[k].popo = res.data[k].popo.split(',')
                             this.qaObject[k].name = res.data[k].name.split(',')
+                           
                         }
                     }
             },

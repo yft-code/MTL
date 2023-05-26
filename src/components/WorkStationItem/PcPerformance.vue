@@ -20,9 +20,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            
         </div>
-
         <self-dialog 
             ref="editTestDeviceRef" 
             :dialog-data="{ title: editTestName+'测试设备', width: '45%', confirmName: editTestName, closeName: '取消' }" 

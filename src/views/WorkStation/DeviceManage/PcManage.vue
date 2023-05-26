@@ -1,28 +1,7 @@
 <template>
     <div class="workstation-content">
-            代打水果蛋糕
         <div class="list-title">电脑设备管理</div>
         <div class="list-container">
-            <!-- <el-table :data="[{}]">
-                <el-table-column v-for="v,k,index in pcData" :key="index" v-if="k!=='NameReflect'" :label="getDisplayName(k).diaplay_name"  align="center">
-                    <div v-for="(coverageItem, coverageIndex) in v" :key="index + '_' + coverageIndex" class="every-coverage">
-                        <el-tag v-if="!isTester">
-                            {{ coverageItem }}
-                        </el-tag> 
-                        <el-tag
-                            v-else
-                            closable
-                            @close="handleClose(k, coverageIndex, coverageItem)">
-                            {{ coverageItem }}
-                        </el-tag> 
-                    </div>
-                    <el-button
-                        v-if="isTester"
-                        size="small"
-                        @click="addItem(k)">新增</el-button>
-                </el-table-column>
-            </el-table> -->
-
             <!-- 标签 -->
             <div class="type-item" v-for="v,k,index in pcData" :key="index" v-if="k!=='NameReflect'">
                 <div class="type-title">{{getDisplayName(k).diaplay_name}}</div>
@@ -46,7 +25,6 @@
                 </div>
             </div>
         </div>
-
         <self-dialog
             ref="addRef"
             :dialog-data="{ title: '新增', width: '35rem', confirmName: '确认', closeName: '取消' }" 
@@ -107,6 +85,9 @@ export default {
     methods:{
         // 获取选项数据-端游兼容性
         getOptions() {
+            console.log(
+            'ffffff'
+            );
             this.$axiosGet("/expertCompatibilityPC/get_select_options/", {}, { operation: "获取测试选项", failed: true }).then(res => {
                 if (res.code == 200) {
                     // console.log(res.data)

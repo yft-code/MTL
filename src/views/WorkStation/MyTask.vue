@@ -197,8 +197,7 @@ export default {
         },
     },
 }
-</script>
-    
+</script> 
 <style scoped>
     .workstation-content {
         width: 100%;
@@ -237,7 +236,4 @@ export default {
         margin-left: 1rem;
         display: inline-block;
     }
-</style>
-
-<style>
 </style>

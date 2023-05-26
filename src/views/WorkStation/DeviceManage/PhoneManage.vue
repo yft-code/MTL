@@ -1,12 +1,14 @@
 <template>
     <div class="workstation-content">
-        杨芳婷
-        <edit-device ref="editDeviceRef" :packageType="packageType" :deviceItemList="deviceItemList" :basicColumnData="basicColumnData"></edit-device>
+        <edit-device 
+            ref="editDeviceRef" 
+            :packageType="packageType" 
+            :deviceItemList="deviceItemList" 
+            :basicColumnData="basicColumnData">
+        </edit-device>
         <div class="list-title">手机设备管理</div>
         <div class="list-container">
-            <!-- <div style="margin-bottom: 10px;"> -->
             <div>
-                <!-- <el-button v-if="isAdmin || isTester" type="primary" size="small" @click="addTestDevice">新增设备</el-button> -->
                 <el-input
                     style="width: 20%; margin-left: 78%"
                     placeholder="请输入关键词检索"
@@ -19,17 +21,23 @@
                 <!-- 分Android和iOS -->
                 <el-tabs v-model="packageType" type="card" @tab-click="keyValue=''">
                     <el-tab-pane label="Android" name="0">
-                        <mission-table :style="androidDataShow.length > 15 ? {'height': '650px','overflow':'auto'} : {}" :basicColumnData="basicColumnData" :tableData="androidDataShow" @deleteDevice="deleteDevice" @editDevice="editDevice"></mission-table>
+                        <mission-table 
+                           :style="androidDataShow.length > 15 ? {'height': '650px','overflow':'auto'} : {}" 
+                           :basicColumnData="basicColumnData" 
+                           :tableData="androidDataShow" 
+                           @deleteDevice="deleteDevice" 
+                           @editDevice="editDevice">
+                        </mission-table>
                     </el-tab-pane>
                     <el-tab-pane label="iOS" name="1">
-                        <mission-table :style="iosDataShow.length > 15 ? {'height': '650px','overflow':'auto'} : {}" :basicColumnData="basicColumnData" :tableData="iosDataShow" @deleteDevice="deleteDevice"  @editDevice="editDevice"></mission-table>
+                        <mission-table 
+                           :style="iosDataShow.length > 15 ? {'height': '650px','overflow':'auto'} : {}" 
+                           :basicColumnData="basicColumnData" :tableData="iosDataShow" 
+                           @deleteDevice="deleteDevice"  
+                           @editDevice="editDevice" >
+                    </mission-table>
                     </el-tab-pane>
                 </el-tabs>
-
-                <!-- 所有设备 -->
-                <!-- <el-card>
-                    <mission-table :style="tableDataShow.length > 15 ? {'height': '650px','overflow':'auto'} : {}" :basicColumnData="basicColumnData" :tableData="tableDataShow" @deleteDevice="deleteDevice"  @editDevice="editDevice"></mission-table>
-                </el-card> -->
             </div> 
         </div>
     </div>
