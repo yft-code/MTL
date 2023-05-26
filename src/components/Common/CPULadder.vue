@@ -7,10 +7,15 @@
                 align="center" 
                 sortable
             ></el-table-column>
-            <el-table-column v-for="brand in cpuBrand" :label="brand" :prop="brand" :key="brand" align="center">
+            <el-table-column 
+                v-for="brand in cpuBrand" 
+               :label="brand" 
+               :prop="brand" 
+               :key="brand" 
+               align="center">
                 <template v-slot="scope">
                     <!-- {{scope.row[brand].join('/')}} -->
-                    <div v-for="item in scope.row[brand]">{{item}}</div>
+                    <div v-for="(item,index) in scope.row[brand]" :key="index">{{item}}</div>
                 </template>
             </el-table-column>
         </el-table>

@@ -3,7 +3,7 @@ import store from "./store";
 import Router from "vue-router";
 import mtlIndex from "@/views/MtlTestPlatform.vue";
 import mtlIndexWithoutHead from "@/views/MtlTestPlatformWithoutHead.vue"
-import index from "@/components/Index/Index.vue";
+import index from "@/views/HomePageIndex.vue";
 import expertServices from '@/components/ExpertServices/Index.vue'
 import expertCompatibility from '@/components/ExpertServices/Compatibility/index.vue'
 import performance from '@/components/ExpertServices/Performance/index.vue'
