@@ -19,7 +19,6 @@
 </template>
  
 <script>
-import $ from "jquery"
 export default {
     props: {
         selectValue: {},
@@ -73,7 +72,7 @@ export default {
         //自定义项目组搜索为不区分大小写
         filterMethodCustomize(node, keywords) {
             let result = false;
-            if (node.text.toUpperCase().indexOf(keywords.toUpperCase()) != -1) {
+            if (node.text.toUpperCase().indexOf(keywords.toUpperCase()) !== -1) {
                 result = true;
             }
             return result;
