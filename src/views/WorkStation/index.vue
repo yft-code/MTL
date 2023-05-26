@@ -1,15 +1,12 @@
 <template>
     <div class="work-station">
         <sidebar />
-        <!-- <workstation-content v-if="curType === 'index'" />
-        <service-orders-list v-else :serviceData="serviceData[curType]" /> -->
         <router-view></router-view>
     </div>
 </template>
-
 <script>
     import sidebar from '@/components/Common/Sidebar.vue'
-    import workstationContent from '@/components/Workstation/WorkstationContent.vue'
+    import workstationContent from '@/components/WorkStationItem/WorkstationContent.vue'
     import serviceOrdersList from '@/components/Common/ServiceOrdersList.vue'
     export default {
         components: {

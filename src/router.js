@@ -14,7 +14,7 @@ import weaknet from '@/components/ExpertServices/Weaknet/index.vue'
 import weaknetPC from '@/components/ExpertServices/weaknetPC/index.vue'
 import preliminary from '@/components/ExpertServices/Preliminary/index.vue'
 import appstore from '@/components/ExpertServices/Appstore/index.vue'
-import workstation from '@/components/Workstation/Index.vue'
+import workstation from '@/views/WorkStation/index.vue'
 import documentCenter from '@/components/DocumentCenter/Index.vue'
 import workTimeCounter from '@/components/WorkTimeCounter/Index.vue'
 import CPULadder from '@/components/Common/CPULadder.vue'
@@ -51,15 +51,13 @@ import StartTestWeaknetPC from '@/components/StartTest/WeaknetPC/StartTest'
 import WeaknetTestReport from '@/components/TestReport/WeaknetTestReport/WeaknetTestReport'
 import WeaknetPCTestReport from '@/components/TestReport/WeaknetPCTestReport/WeaknetPCTestReport'
 import ProtocolTestReport from '@/components/TestReport/ProtocolTestReport/ProtocolTestReport'
-import MyMission from '@/components/Workstation/MyMission'
-import AssignContactPerson from '@/components/Workstation/AssignContactPerson'
-import PcManage from '@/components/Workstation/PcManage'
-import PhoneManage from '@/components/Workstation/PhoneManage'
+import MyTask from '@/views/WorkStation/MyTask.vue'
+import AssignContactPerson from '@/views/WorkStation/AssignContactPerson.vue'
+import PcManage from '@/views/WorkStation/DeviceManage/PcManage.vue'
+import PhoneManage from '@/views/WorkStation/DeviceManage/PhoneManage.vue'
 import StartTestProtocol from '@/components/StartTest/Protocol/StartTest.vue'
-import ProtocolManage from '@/components/Workstation/ProtocolManage'
-import PcPerformance from '@/components/Workstation/PcPerformance'
-
-
+import ProtocolManage from '@/components/WorkStationItem/ProtocolManage'
+import PcPerformance from '@/components/WorkStationItem/PcPerformance'
 Vue.use(Router);
 let isFirst = true;
 let router = new Router({
@@ -144,7 +142,7 @@ let router = new Router({
                     path: 'workstation', 
                     component: workstation, 
                     children: [
-                        { path:'myMission', component: MyMission },  // 我的任务
+                        { path:'myMission', component: MyTask},  // 我的任务
                         { path:'assignContactPerson', component: AssignContactPerson },  // 分配接口人
                         { path:'phoneManage', component: PhoneManage },  // 手机设备管理
                         { path:'pcManage', component: PcManage },  // 电脑设备管理

@@ -1,6 +1,6 @@
 <template>
     <div class="workstation-content">
-    
+            代打水果蛋糕
         <div class="list-title">电脑设备管理</div>
         <div class="list-container">
             <!-- <el-table :data="[{}]">

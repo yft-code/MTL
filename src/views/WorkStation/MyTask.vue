@@ -1,3 +1,4 @@
+// 我的任务
 <template>
     <div class="workstation-content">
         <div class="container">
@@ -64,20 +65,6 @@ export default {
                         minWidth: 100,
                         type: "normal",
                     },
-                    // {
-                    //     titleName: '项目名称',
-                    //     propName: 'project_name',
-                    //     sortFlag: true,
-                    //     minWidth: 95,
-                    //     type: "normal",
-                    // },
-                    // {
-                    //     titleName: '包体版本',
-                    //     propName: 'test_version',
-                    //     sortFlag: true,
-                    //     minWidth: 95,
-                    //     type: "normal",
-                    // },
                     {
                         titleName: '测试原因',
                         propName: 'test_reason',
@@ -92,13 +79,6 @@ export default {
                         minWidth: 120,
                         type: "normal",
                     },
-                    // {
-                    //     titleName: '申请日期',
-                    //     propName: 'application_date',
-                    //     sortFlag: true,
-                    //     minWidth: 95,
-                    //     type: "normal",
-                    // },
                     {
                         titleName: '最迟报告日期',
                         propName: 'end_date',

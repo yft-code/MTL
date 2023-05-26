@@ -1,5 +1,6 @@
 <template>
     <div class="workstation-content">
+        杨芳婷
         <edit-device ref="editDeviceRef" :packageType="packageType" :deviceItemList="deviceItemList" :basicColumnData="basicColumnData"></edit-device>
         <div class="list-title">手机设备管理</div>
         <div class="list-container">
@@ -36,7 +37,7 @@
 
 <script>
 import MissionTable from '@/components/StartTest/Common/MissionTable'
-import EditDevice from '@/components/Workstation/EditDevice'
+import EditDevice from '@/components/WorkStationItem/EditDevice'
 export default {
     components: {
         MissionTable,

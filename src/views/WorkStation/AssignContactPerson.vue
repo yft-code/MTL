@@ -1,9 +1,8 @@
 <template>
     <div class="workstation-content">
-    
         <div class="list-title">{{ isAdmin ? '分配服务接口人' : '查看服务接口人' }}</div>
         <div class="list-container">
-            <!-- {{qaList}} -->
+            <!-- {{qaList}} -->fgfgdgd
             <el-form label-width="220px" label-suffix="：">
                 <el-form-item v-for="item,i in testTypeOption" :label="item.label" :key="i">
                     <el-select 
