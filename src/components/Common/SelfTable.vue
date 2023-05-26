@@ -308,7 +308,7 @@ import EditPicture from "./EditPicture"
 import SendReport from "./SendReport"
 import SelfPopo from './SelfPopo.vue'
 import SelfPersonSelect from './SelfPersonSelect.vue'
-import {getListData} from '@/api/workStation/selfTable'
+import {getListData,getExpertTestStatus} from '@/api/workStation/selfTable'
 import {getReminder,getQaList} from '@/api/workStation/common'
 export default {
     components: {
@@ -635,12 +635,11 @@ export default {
         },
 
         //获取状态数组
-        getStatusList(){
-            this.$codePost("/expertCompatibility/get_expert_test_status/").then(res => {
+       async  getStatusList(){
+        let res= await getExpertTestStatus({},{})
                 if (res.code == 200) {
                     this.testStatusList = res.data;
                 }
-            })
         },
 
         getPicUrl(row, index, pic) {

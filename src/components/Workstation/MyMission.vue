@@ -2,7 +2,6 @@
     <div class="workstation-content">
         <div class="container">
             <div>
-                sss
                 <el-tabs class="record-tabs" v-model="tableAxiosList.my_task" @tab-click="changeMyTask">
                     <el-tab-pane label="我的任务" name="1"></el-tab-pane>
                     <el-tab-pane label="全部任务" name="0"></el-tab-pane>

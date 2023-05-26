@@ -1,4 +1,5 @@
 import {post} from '@/utils/request'
+// 获取是否是接口人
   export function getReminder(params,messageList) {
     return post('/service/get_reminder/',params,messageList)
   }

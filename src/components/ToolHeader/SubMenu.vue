@@ -87,7 +87,6 @@
                 this.menuData[this.subMenuInfo.currentType].forEach(item => {
                     // 给每个服务或产品添加isCurrentType属性
                     this.$set(item, 'isCurrentType', item.type === type ? true : false);
-                    // console.log(this.menuData[this.subMenuInfo.currentType])
                 });
             },
             jumpPage(url) {
@@ -163,6 +162,4 @@
     .list-item:hover .list-item-des {
         color: rgba(21, 110, 239, 0.8);;
     }
-</style>
-<style>
 </style>

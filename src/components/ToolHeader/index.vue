@@ -1,25 +1,23 @@
 <template>
     <div class="tool-header" :class="isDarkStyle ? 'dark-style' : ''">
-        <water-mark v-if="userInfo" :input-text="userInfo"></water-mark>
+        <water-mark 
+           v-if="userInfo" 
+          :input-text="userInfo"
+        >
+        </water-mark>
         <div class="header-content">
             <!-- MTL logo -->
             <div @click="jumpToIndex" style="cursor: pointer;">
-                <img style="height:40px;vertical-align:middle; margin-left: 40px; text-align: center;" :src="isDarkStyle ? 'http://mtl.leihuo.netease.com:8000/site_media/ttd_logo_dark.png' : 'http://mtl.leihuo.netease.com:8000/site_media/ttd_logo_light.png'" />
+                <img class="image-logo"
+                :src="isDarkStyle ? 
+                'http://mtl.leihuo.netease.com:8000/site_media/ttd_logo_dark.png' : 
+                'http://mtl.leihuo.netease.com:8000/site_media/ttd_logo_light.png'" 
+                />
             </div>
             <!-- 导航栏 -->
             <header-menu :is-dark-style="isDarkStyle" />
             <!-- 工具列 -->
             <div class="tool-bar">
-                <!-- <div class="tool-item">下载</div>
-                <div class="tool-item" @click="jumpToDocumentCenter">文档</div> -->
-                <!-- <div class="tool-item" @click="jumpToWorkTime">工时</div> -->
-                <!-- <div 
-                    v-if="$route.path !== '/mtl_test_platform/page/workstation'"
-                    class="tool-item" 
-                    @click="jumpToWorkstation"
-                    >
-                    工作站
-                </div> -->
                 <div class="tool-item" v-if="path != '/mtl_test_platform/page/index'" >
                     <project-select class="project-select-component" />
                 </div>
@@ -37,7 +35,12 @@
                             <i class="el-icon-caret-bottom"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="logout" @click="removeCookieUser()">登出</el-dropdown-item>
+                            <el-dropdown-item 
+                               command="logout" 
+                               @click="removeCookieUser()"
+                            >
+                            登出
+                        </el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                     <div 
@@ -48,7 +51,10 @@
                 </div>
             </div>
         </div>
-        <div class="header-background-div" :class="isShowBackground ? 'show-background' : ''"></div>
+        <div 
+             class="header-background-div" 
+            :class="isShowBackground ? 'show-background' : ''">
+        </div>
         <sub-menu />
     </div>
 </template>
@@ -57,7 +63,7 @@
     import $ from 'jquery'
     import headerMenu from '@/components/ToolHeader/HeaderMenu.vue'
     import subMenu from '@/components/ToolHeader/SubMenu.vue'
-    import ProjectSelect from "./ProjectSelect.vue"
+    import ProjectSelect from "@/components/ToolHeader/ProjectSelect.vue"
     import waterMark from 'waterMark'
     export default {
         components: {
@@ -184,20 +190,18 @@
     .show-background {
         height: 64px;
     }
+    .image-logo{
+        height:40px;
+        vertical-align:middle;
+        margin-left: 40px;
+        text-align: center;
+    }
     .logo-div {
         cursor: pointer;
         margin: 12px 40px;
         height: 40px;
         width: 164px;
-        /*
-        background-image: url('../../assets/img/ttd_logo_light.png');
-        */
     }
-    /*
-    .dark-style .logo-div {
-        background-image: url('../../assets/img/ttd_logo_dark.png');
-    }
-    */
     .logo-img {
         height: 40px;
         width: 126px;
@@ -229,24 +233,16 @@
         color: #333333;
     }
     .login-div {
-        background-image: url('../../assets/img/login.png');
+        background-image: url('~@/assets/img/login.png');
         height: 25px;
         width: 25px;
         cursor: pointer;
     }
     .dark-style .login-div {
-        background-image: url('../../assets/img/login_dark.png');
+        background-image: url('~@/assets/img/login_dark.png');
     }
         .project-select-component {
         display: inline-block;
         margin-right: 2rem;
     }
-</style>
-<style>
-/* .login-user .el-dropdown {
-    color: #fff;
-}
-.login-user .el-dropdown:hover {
-    color: #aaa;
-} */
 </style>

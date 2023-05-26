@@ -1,3 +1,4 @@
+// 头部位置的项目选择组件
 <template>
     <div id="testProjectSelect" >
         <self-cascader 
@@ -12,7 +13,6 @@
 <script>
 import SelfCascader from '@/components/Common/SelfCascader.vue'
 import { getExpertGroup } from '@/api/profile.js'
-import $ from "jquery"
 export default {
     data() {
         return {

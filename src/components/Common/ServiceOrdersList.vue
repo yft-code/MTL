@@ -433,7 +433,7 @@ import { getReminder,getQaList} from '@/api/workStation/common'
                 this.testTypeShow = !this.testTypeShow
             },
 
-        testTypeChange(val){
+       async testTypeChange(val){
                 let list = {
                     page: 1,
                     rows: 10,
@@ -442,13 +442,12 @@ import { getReminder,getQaList} from '@/api/workStation/common'
                     order: "",
                     test_type: val
                 }
-                this.$codePost('/service/get_test_apply/', list, { operation: "获取数据", failed: true }).then(res => {
+            let res=await getTestApply(list, { operation: "获取数据", failed: true })
                     console.log('ddsdadadsad');
                     if (res.code == 200) {
                         this.tableData = res.data.res
                         this.total = res.data.res_num
                     }
-                })
             },
 
             customColorMethod(percentage) {
@@ -533,6 +532,7 @@ import { getReminder,getQaList} from '@/api/workStation/common'
             },
 
             update(item, msg) {
+                console.log('修改测试接口人');
                 this.$codePost("/service/update_application_process/", item, { operation: msg, failed: true }).then(res => {
                     if (res.code !== 200) {
                         this.$message.error(res.msg)
@@ -620,16 +620,15 @@ import { getReminder,getQaList} from '@/api/workStation/common'
             },
 
             // 获取测试申请记录，也就是页面的表格数据
-            getTableData() {
+         async getTableData() {
                 this.lastSearchValue = this.tableKeyList.key;
                 let list = this.tableKeyList
                 list.test_type = this.testTypeValue
-                this.$codePost('/service/get_test_apply/', list, { operation: "获取数据", failed: true }).then(res => {
+                let res=await getTestApply(list, { operation: "获取数据", failed: true })
                     if (res.code == 200) {
                         this.tableData = res.data.res
                         this.total = res.data.res_num
                     }
-                })
             },
 
             //排序
