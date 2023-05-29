@@ -3,10 +3,11 @@
         <self-dialog 
             ref="editPictureRef" 
             :dialog-data="{ title: '编辑图片', width: '25rem', top: '3rem', confirmName: '确定', closeName: '取消' }" 
-            @confirm="confirmMethod"
-            >
+            @confirm="confirmMethod">
             <div v-if="oldPictures.length > 0" class="picShow">
-                <div v-for="(item,index) in oldPictures" :key="index" class="pic-show-item">
+                <div v-for="(item,index) in oldPictures" 
+                     :key="index" 
+                     class="pic-show-item">
                     <self-picture-show :img-path="[item.pic_url]" img-type="thumbnail" />
                     <i class="el-icon-circle-close" @click="removeOldPic(index,item.id)"></i>
                 </div>
@@ -31,7 +32,8 @@
 </template>
 <script>
 import uploadFile from 'uploadfile'
-import SelfDialog from './SelfDialog.vue'
+import SelfDialog from '@/components/Common/SelfDialog.vue'
+import {updateExpertTestPicture,updatePicture} from '@/api/common'
 export default {
     components: {
         uploadFile,
@@ -48,9 +50,12 @@ export default {
             list: {},
             oldPictures: [],
             oldDeleteList: [],
-            fileList: [],//给upload组件用，拿不到数据
-            previewPics: [],//新上传的预览图片地址
-            fileListData: [],//上传的图片文件
+            //给upload组件用，拿不到数据
+            fileList: [],
+            //新上传的预览图片地址
+            previewPics: [],
+            //上传的图片文件
+            fileListData: [],
         }
     },
     computed: {
@@ -66,9 +71,6 @@ export default {
     },
     methods: {
         editPicture(list, picData, oldFileData) {
-            // console.log(list)
-            // console.log(picData)
-            // console.log(oldFileData)
             this.list = list;
             if (picData != undefined) {
                 this.oldPictures = JSON.parse(JSON.stringify(picData));
@@ -111,7 +113,7 @@ export default {
         },
 
         //上传后台
-        confirmMethod() {
+        async  confirmMethod() {
             if (this.confirmType == "directAxios") {
                 //直接传给后台
                 //用于测试内容表格中上传图片
@@ -125,30 +127,27 @@ export default {
                     formData.append("picture_list", this.fileListData[i]);
                 }
                 if(this.list.test_type == '11'){
-                    this.$formPost("/expertCompatibilityPC/update_expert_test_picture/", formData, { operation: "编辑图片", success: true, failed: true }).then(res => {
+                     let res=await updateExpertTestPicture({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
                         }
                         this.$store.commit("setPageIsLoading", false);
-                    })
                 }else if(this.list.test_type == '10'){
-                    this.$formPost("/expertCompatibility/update_expert_test_picture/", formData, { operation: "编辑图片", success: true, failed: true }).then(res => {
+                   let res=await updateExpertTestPicture({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
                         }
                         this.$store.commit("setPageIsLoading", false);
-                    })
                 }else if(this.list.test_type == '30'){
                     formData.append("application_id", this.$route.query.id);
-                    this.$formPost("/protocolTest/update_picture/", formData, { operation: "编辑图片", success: true, failed: true }).then(res => {
+                   let res=await updatePicture({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
                         }
                         this.$store.commit("setPageIsLoading", false);
-                    })
                 }
             } else {
                 //把数据传给父组件让父组件自己处理
@@ -159,7 +158,6 @@ export default {
                     oldDeleteList: this.oldDeleteList,
                     fileListData: this.fileListData,
                 }
-                
                 this.$emit("afterEdit", list);
                 this.$refs.editPictureRef.closeDialog();
             }

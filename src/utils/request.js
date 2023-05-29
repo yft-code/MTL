@@ -73,7 +73,6 @@ export function post(url, params,messageList,requestType = '') {
 			.then(res => {
 				if(res.data.code === 200) {
 					resolve(res.data)
-					// Message.success(messageList.operation + "成功！");
 				} else {
 					Message({
 						message: res.data.msg,
