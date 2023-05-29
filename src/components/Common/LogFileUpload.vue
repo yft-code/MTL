@@ -62,7 +62,6 @@ export default {
         oldFile(newValue, oldValue) {
             this.oldFileData = newValue;
         },
-
     }
 }
 </script>
