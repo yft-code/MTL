@@ -15,3 +15,7 @@ export function updatePicture(params,messageList) {
 export function getTestInclusions(params,messageList) {
     return post('/expertCompatibility/get_test_inclusions/',params,messageList)
 }
+// 获取文件的url 
+export function getDriverFile(params,messageList) {
+    return post('/service/get_driver_file/',params,messageList)
+}
