@@ -1,27 +1,30 @@
 <template>
-    <div style="margin-top: 80px; margin-bottom: 15px; margin-left:15px; margin-right:15px">
-        <el-table :data="cpuData" stripe border >
-            <el-table-column 
-                label="等级" 
-                prop="level" 
-                align="center" 
-                sortable
-            ></el-table-column>
-            <el-table-column 
-                v-for="brand in cpuBrand" 
-               :label="brand" 
-               :prop="brand" 
-               :key="brand" 
-               align="center">
-                <template v-slot="scope">
-                    <!-- {{scope.row[brand].join('/')}} -->
-                    <div v-for="(item,index) in scope.row[brand]" :key="index">{{item}}</div>
-                </template>
-            </el-table-column>
-        </el-table>
-    </div>
+ <div class="cup-container">
+    <el-table :data="cpuData" stripe border >
+        <el-table-column 
+            label="等级" 
+            prop="level" 
+            align="center" 
+            sortable
+        >
+        </el-table-column>
+        <el-table-column 
+            v-for="brand in cpuBrand" 
+            :key="brand" 
+            :label="brand" 
+            :prop="brand" 
+             align="center">
+            <template v-slot="scope">
+                <div v-for="(item,index) in scope.row[brand]" :key="index">
+                    {{item}}
+                </div>
+            </template>
+        </el-table-column>
+    </el-table>
+ </div>
 </template>
 <script>
+import {getCpuLadder} from '@/api/common'
 export default {
     components: {
     },
@@ -30,7 +33,7 @@ export default {
         return {
             cpuData: [],
             cpuBrand: [],
-            max_level: "",
+            maxLevel: "",
         }
     },
     computed: {
@@ -42,20 +45,20 @@ export default {
 
     },
     methods: {
-        getCPUData(){
-            this.$codePost("/expertCompatibility/get_cpu_ladder/", { operation: "获取CPU天梯数据", failed: true }).then(res => {
-                if (res.code == 200) {
-                    console.log('Get CPU Ladder Data Success');
-                    this.max_level = res.data.max_level 
-                    this.handleCPUData(res.data.data)
-                    this.handleCpuBrand(res.data.brand)
-                }
-            })
+
+        async  getCpuData(){
+            let res=await getCpuLadder({},{ operation: "获取CPU天梯数据", failed: true })
+            if (res.code == 200) {
+                console.log('Get CPU Ladder Data Success');
+                this.maxLevel = res.data.max_level 
+                this.handleCpuData(res.data.data)
+                this.handleCpuBrand(res.data.brand)
+            }
         },
 
-        handleCPUData(data){
+        handleCpuData(data){
             let cpuData = []
-            for (let i=1; i<=this.max_level; i++){
+            for (let i=1; i<=this.maxLevel; i++){
                 data[i].level = i
                 cpuData.push(data[i])
             }
@@ -73,5 +76,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.cup-container{
+    margin:80px 15px 80px 15px;
+}
 </style>
