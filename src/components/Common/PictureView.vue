@@ -1,28 +1,53 @@
 <template>
-    <div v-if="activeIndex != -1" ref="pitureViewComponentRef" class="picture-view-component" title="" @click="activeIndex = -1" @keyup.esc="activeIndex = -1" tabindex="0">
+    <div 
+        v-if="activeIndex != -1"
+        class="picture-view-component"  
+        ref="pitureViewComponentRef" 
+        title=""
+        tabindex="0" 
+        @click="activeIndex = -1" 
+        @keyup.esc="activeIndex = -1" 
+        
+    >
         <div class="close-preview" @click="activeIndex = -1">
             <i class="el-icon-close"></i>
         </div>
-        <div class="last-pic-button" @click.stop="changePicIndex(-1)" v-if="imgPath.length > 1">
+        <div
+            v-if="imgPath.length > 1" 
+            class="last-pic-button"
+            @click.stop="changePicIndex(-1)" 
+        >
             <i class="el-icon-arrow-left"></i>
         </div>
-        <div class="next-pic-button" @click.stop="changePicIndex(1)" v-if="imgPath.length > 1">
+        <div
+            v-if="imgPath.length > 1" 
+            class="next-pic-button" 
+            @click.stop="changePicIndex(1)" 
+        >
             <i class="el-icon-arrow-right"></i>
         </div>
-        <div class="picture-preview" @drop="drop" @dragover="dragover">
+        <div 
+            class="picture-preview" 
+            @drop="drop" 
+            @dragover="dragover"
+        >
             <img 
                 v-if="imgUrl && imgUrl.length > 0"
+                class="picture-preview-img"
                 id="previewImg" 
-                class="picture-preview-img" 
-                style="" 
                 ref="previewImg" 
                 :src="imgUrl[activeIndex]" 
                 :style="{transform:'scale('+ scale +') rotate('+ deg +'deg)',top:top+'px',left:left+'px'}"
                 @click.stop
                 draggable="true" 
-                @dragstart="dragstart($event)">
+                @dragstart="dragstart($event)"
+            >
         </div>
-        <div v-if="showTitle" class="picture-title" @click.stop>
+        <div 
+            v-if="showTitle" 
+            class="picture-title" 
+            @click.stop
+        >
             <span>截图来自设备：{{ imgPath[activeIndex].device_name }}</span>
         </div>
         <!--旋转按钮-->
@@ -35,8 +60,16 @@
         </div>
         <div class="thumbnail-swiper" @click.stop>
             <div class="thumbnail-list" :style="{'left': thumbnailLeft}" v-if="imgUrl && imgUrl.length > 0">
-                <div v-for="(item, index) in imgUrl" :key="index" :class="{'thumbnail-picture-div': true, 'active': activeIndex == index}" @click="activeIndex = index">
-                    <img :src="showTitle ? item.picture : item" class="thumbnail-picture">
+                <div 
+                    v-for="(item, index) in imgUrl" 
+                    :key="index" 
+                    :class="{'thumbnail-picture-div': true, 'active': activeIndex == index}" 
+                    @click="activeIndex = index"
+                >
+                    <img 
+                        :src="showTitle ? item.picture : item" 
+                        class="thumbnail-picture"
+                    >
                 </div>
             </div>
         </div>
@@ -44,15 +77,14 @@
 </template>
 
 <script>
+import {getDriverFile} from '@/api/common'
 import $ from 'jquery'
 export default {
     props: {
         imgPath: {
-            // type: Array,
             required: true,
         },
         showTitle: Boolean,
-
     },
     data() {
         return {
@@ -69,7 +101,6 @@ export default {
             top:"",
             screenTop:"",
             screenLeft:"",
-            // style:null,
             imgUrl: [],
         }
     },
@@ -79,19 +110,17 @@ export default {
             this.imgUrl = []
             for(let i = 0; i < this.imgPath.length; i++){
                 if(this.showTitle){
-                    await this.$codePost('/service/get_driver_file/', {
+                  let res=  await getDriverFile({
                         pre_path: this.prePath.pic,
                         path: this.imgPath[i].picture
-                    }).then(res=>{
-                        this.imgUrl.push(res.data)
-                    })
+                    },{})
+                    this.imgUrl.push(res.data)
                 }else{
-                    await this.$codePost('/service/get_driver_file/', {
+                     let res=  await getDriverFile({
                         pre_path: this.prePath.pic,
-                        path: this.imgPath[i]
-                    }).then(res=>{
+                        path: this.imgPath[i].picture
+                    },{})
                         this.imgUrl.push(res.data)
-                    })
                 }
             }
         },
