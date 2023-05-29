@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import {editReminder} from '@/api/workStation/assignContactPerson'
 import {getReminder,getQaList} from '@/api/workStation/common'
     export default {
         components: {
@@ -163,7 +164,7 @@ import {getReminder,getQaList} from '@/api/workStation/common'
                     }
             },
 
-            changeTester(item){
+           async changeTester(item){
                 let name = []
                 this.qaList.forEach(qa => {
                     if(this.qaObject[item.value].popo.indexOf(qa.value) !== -1){
@@ -175,9 +176,11 @@ import {getReminder,getQaList} from '@/api/workStation/common'
                     popo: this.qaObject[item.value].popo.join(','),
                     name: name.join(','),
                 }
-                this.$codePost("/service/edit_reminder/",list,{ operation: "分配服务接口人", success:true, failed: true }).then(res => {
-                    this.getCurrentContactPerson()
-                })
+               
+               let res = await editReminder(list,{ operation: "分配服务接口人", success:true, failed: true })
+               if(res.code == 200){
+                  this.getCurrentContactPerson()
+               }  
             },
         },
     }
