@@ -1,12 +1,8 @@
 <template>
-
     <div class="manager-list">
         <div class="manager-title">用户管理页面</div>
-        <div class="container">
-            
-        </div>
+        <div class="container"></div>
     </div>
-    
 </template>
 <script>
 
