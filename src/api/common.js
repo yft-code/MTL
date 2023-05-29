@@ -11,3 +11,7 @@ export function updateExpertTestPicture(params,messageList) {
 export function updatePicture(params,messageList) {
     return post('/protocolTest/update_picture/',params,messageList,'formData')
 }
+// 获取历史包体数据
+export function getTestInclusions(params,messageList) {
+    return post('/expertCompatibility/get_test_inclusions/',params,messageList)
+}

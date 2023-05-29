@@ -4,22 +4,29 @@
         <div class="radio-select">
             <div>
                 <el-radio-group v-model="inputModel">
-                    <el-radio v-for="(item,index) in selectData.radioOption" :key="index" :label="item.value">{{ item.label }}</el-radio>
+                    <el-radio 
+                        v-for="(item,index) in selectData.radioOption" 
+                        :key="index" 
+                        :label="item.value">
+                        {{ item.label }}
+                    </el-radio>
                 </el-radio-group>
             </div>
-            
-            <div v-if="selectData.rightTip != undefined" style="float:right; font-size: 14px; margin-top: 5px;">{{ selectData.rightTip }}</div>
+
+            <div v-if="selectData.rightTip != undefined" style="float:right; font-size: 14px; margin-top: 5px;">
+                {{ selectData.rightTip }}
+            </div>
         </div>
         <div>
             <!--文件上传-->
             <div v-if="oldInputModel == 'file'">
                 <el-upload
-                    ref="uploadFileRef"
                     class="upload-div" 
+                    ref="uploadFileRef"
                     drag
+                    multiple
                     action="#"
                     :auto-upload="false"
-                    multiple
                     :file-list="fileList"
                     :show-file-list="false"
                     :accept="selectData.selectDict[oldInputModel].fileAccept"
@@ -48,22 +55,34 @@
                         width="400"
                         trigger="click"
                         v-model="historyPackageFlag">
-                        <el-table ref="historyTableRef" :data="historyPackageData" @selection-change="changeHistoryPackage">
+                        <el-table 
+                            ref="historyTableRef" 
+                            :data="historyPackageData" 
+                            @selection-change="changeHistoryPackage">
                             <el-table-column type="selection" align="center"></el-table-column>
-                            <el-table-column property="projectCode" label="项目代号" align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.project }}</span>
-                                </template>
+                            <el-table-column 
+                                property="projectCode" 
+                                label="项目代号" 
+                                align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.project }}</span>
+                                    </template>
                             </el-table-column>
-                            <el-table-column  property="uploadDate" label="上传日期" align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.application_date }}</span>
-                                </template>
+                            <el-table-column  
+                                property="uploadDate" 
+                                label="上传日期" 
+                                align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.application_date }}</span>
+                                    </template>
                             </el-table-column>
-                            <el-table-column  property="testVersion" label="包体版本" align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.test_version }}</span>
-                                </template>
+                            <el-table-column  
+                                property="testVersion" 
+                                label="包体版本" 
+                                align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.test_version }}</span>
+                                    </template>
                             </el-table-column>
                         </el-table>
                         <el-pagination
@@ -74,13 +93,27 @@
                             :current-page="historyList.page"
                             :total="historyTotal"
                             @current-change="handleCurrentChange"
-                            @size-change="handleSizeChange"></el-pagination>
+                            @size-change="handleSizeChange">
+                        </el-pagination>
                         <div style="text-align: right; margin-top:1rem;">
-                            <el-button type="primary" size="mini" @click="confirmHistory">确定</el-button>
+                            <el-button 
+                                type="primary" 
+                                size="mini" 
+                                @click="confirmHistory">
+                                  确定
+                            </el-button>
                             <el-button size="mini" @click="historyPackageFlag = false">取消</el-button>
                         </div>
-                        <el-button icon="el-icon-plus" slot="reference" style="margin-top:60px;" @click="showHistory">添加历史包体</el-button>
+
+                        <el-button 
+                            icon="el-icon-plus" 
+                            slot="reference" 
+                            style="margin-top:60px;" 
+                            @click="showHistory">
+                                  添加历史包体
+                        </el-button>
                     </el-popover>
+
                     <el-button v-else icon="el-icon-plus" style="margin-top:60px;" @click="showHistory">
                         添加历史包体
                     </el-button>
@@ -108,6 +141,7 @@
 <script>
 import FileShowDiv from "@/components/Common/FileShowDiv"
 import SelfRichEditor from "@/components/Common/SelfRichEditor.vue"
+import {getTestInclusions} from '@/api/common'
 export default {
     components: {
         FileShowDiv,
@@ -123,30 +157,39 @@ export default {
     },
     data() {
         return {
-            oldInputModel: "textarea",//用于记录改变前的模式，因为改变模式后，如果原模式下有输入，会进行二次确认，为了方便回退模式，要记录原先的值
-            inputModel: "textarea",//选择模式项中绑定的值
-            canWatchRadio: false,//是否可监控radio值，设置该值的目的是，想要等编辑时的详情数据获取完毕后，再开始监听
-
+            //用于记录改变前的模式，因为改变模式后，如果原模式下有输入，会进行二次确认，为了方便回退模式，要记录原先的值
+            oldInputModel: "textarea",
+            //选择模式项中绑定的值
+            inputModel: "textarea",
+            //是否可监控radio值，设置该值的目的是，想要等编辑时的详情数据获取完毕后，再开始监听
+            canWatchRadio: false,
             //历史包体模式
-            historyPackageFlag: false,//历史包体选择
+            historyPackageFlag: false,
+            //获取历史包体数据传参
             historyList: {
                 page: 1,
                 rows: 10,
                 project: "",
-            },//获取历史包体数据传参
-            historyTotal: 0,//历史包体数据总数
-            historyPackageData: [],//历史包体表格数据
-            oldHistoryData: [],//旧的历史文件数据（编辑、复测时存在）
-            tempHistory: [],//临时存储选中的历史包体
-            historyArr: [],//选中的历史文件数组
-            
-            //输入模式
-            textareaValue: "",//textarea输入值
-
+            },
+            //历史包体数据总数
+            historyTotal: 0,
+            //历史包体表格数据
+            historyPackageData: [],
+            //旧的历史文件数据（编辑、复测时存在）
+            oldHistoryData: [],
+            //临时存储选中的历史包体
+            tempHistory: [],
+            //选中的历史文件数组
+            historyArr: [],
+            //输入模式,textarea输入值
+            textareaValue: "",//
             //文件模式
-            oldFileData: [],//旧的文件数据（编辑、复测时存在）
-            fileList: [],//el-upload绑定的文件数组
-            fileData: [],//实际的文件数组
+            //旧的文件数据（编辑、复测时存在）
+            oldFileData: [],
+            //el-upload绑定的文件数组
+            fileList: [],
+            //实际的文件数组
+            fileData: [],
             
         }
     },
@@ -240,13 +283,12 @@ export default {
         },
 
         //获取历史包体数据
-        getHistoryData() {
-            this.$codePost("/expertCompatibility/get_test_inclusions/", this.historyList).then(res => {
+        async getHistoryData() {
+            let res = await getTestInclusions(this.historyList,{})
                 if (res.code == 200) {
                     this.historyPackageData = res.data.data;
                     this.historyTotal = res.data.data_num;
                 }
-            })
         },
 
         //上传
