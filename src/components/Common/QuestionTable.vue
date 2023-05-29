@@ -1,7 +1,17 @@
 <template>
     <div class="container" style="margin-top: 80px;">
-        <edit-question-p-c v-if="isPC == 'questionTablePC'" ref="editQuestionPCRef" :table-name="tableName" @afterEdit="afterEdit"/>
-        <edit-question v-else-if="isPC == 'questionTable'" ref="editQuestionRef" :table-name="tableName" @afterEdit="afterEdit"/>
+        <edit-question-p-c 
+            v-if="isPC == 'questionTablePC'" 
+            ref="editQuestionPCRef" 
+            :table-name="tableName" 
+            @afterEdit="afterEdit"
+        />
+        <edit-question 
+            v-else-if="isPC == 'questionTable'" 
+            ref="editQuestionRef" 
+            :table-name="tableName" 
+            @afterEdit="afterEdit"
+        />
         <div style="margin-bottom: 1rem;">
             <span @click="jumpPage()" style="cursor:pointer">开始测试</span>
             &nbsp;
@@ -19,12 +29,13 @@
             :table-type="`questionTable`"
             @editCaseQuestion="editCaseQuestion" 
             @deleteCaseQuestion="deleteCaseQuestion"
-            />
+        />
     </div>
 </template>
 <script>
 import EditQuestion from "@/components/StartTest/Compatibility/EditQuestion"
 import EditQuestionPC from '@/components/StartTest/CompatibilityPC/EditQuestion'
+import {deleteExpertTestQuestion,deleteExpertTestQuestionPc} from '@/api/common'
 export default {
     components: {
         EditQuestion,
@@ -112,7 +123,6 @@ export default {
     },
     created() {
         this.tableName = this.$route.query.testRecordName;
-        // console.log(this.$route.path.split('/')[3])
         if(this.$route.path.split('/')[3] == 'questionTablePC'){
             this.isPC = "questionTablePC"
             this.tableList.postAppPrefix = "expertCompatibilityPC"
@@ -181,13 +191,13 @@ export default {
                 //确认
                 let list = { question_id: item.id, table_name: this.tableName };
                 if(this.isPC == "questionTable"){
-                    this.$codePost("/expertCompatibility/delete_expert_test_question/", list, { operation: "删除用例问题", success: true, failed: true }).then(res => {
+                    deleteExpertTestQuestion(list, { operation: "删除用例问题", success: true, failed: true }).then(res => {
                         if (res.code == 200) {
                             this.$refs.questionTableRef.getTableData();
                         }
                     })
                 }else if(this.isPC == "questionTablePC"){
-                    this.$codePost("/expertCompatibilityPC/delete_expert_test_question/", list, { operation: "删除用例问题", success: true, failed: true }).then(res => {
+                    deleteExpertTestQuestionPc(list, { operation: "删除用例问题", success: true, failed: true }).then(res => {
                         if (res.code == 200) {
                             this.$refs.questionTableRef.getTableData();
                         }
