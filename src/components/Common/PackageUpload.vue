@@ -4,8 +4,8 @@
             <div class="upload-item-title">上传测试包</div>
             <div class="item-divider"></div>
             <el-upload
+                class="package-upload"   
                 ref="uploadFileRef"
-                class="package-upload" 
                 drag
                 action="#"
                 :auto-upload="false"
@@ -27,29 +27,12 @@
         <div class="upload-item-content" >
             <div class="upload-item-title">APP信息</div>
             <div class="item-divider"></div>
-            <el-table
-                :data="tableData"
-                height="180"
-            >
-                <el-table-column
-                    prop="appName"
-                    label="应用名称"
-                ></el-table-column>
-                <el-table-column
-                    prop="appVersion"
-                    label="版本号"
-                ></el-table-column>
-                <el-table-column
-                    prop="packageName"
-                    label="包名"
-                ></el-table-column>
-                <el-table-column
-                    prop="packageSize"
-                    label="包大小"
-                ></el-table-column>
-                <el-table-column
-                    label="操作"
-                >
+            <el-table :data="tableData" height="180">
+                <el-table-column prop="appName"     label="应用名称"></el-table-column>
+                <el-table-column prop="appVersion"  label="版本号"></el-table-column>
+                <el-table-column prop="packageName" label="包名"></el-table-column>
+                <el-table-column prop="packageSize" label="包大小"></el-table-column>
+                <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
