@@ -6,7 +6,7 @@
             v-model="editValue" 
             :options="editorOption" 
             :config="editorOption"
-        ></quill-editor>
+        />
     </div>
 </template>
 
@@ -40,7 +40,8 @@ export default {
     },
     data() {
         return {
-            editorOption: {//富文本配置
+            //富文本配置数据
+            editorOption: {
                 placeholder: this.placeholder || "",
                 modules: {
                     toolbar: [
@@ -75,11 +76,7 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
-<style>
+<style lang="less">
 .rich-editor .ql-editor {
     min-height: 120px !important;
     max-height: 400px;
