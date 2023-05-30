@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import popo from '@/utils/popo.js'
 export default {
     data() {
         return {
@@ -28,7 +27,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .popo-img {
     width: 15px;
     height: 14px;
