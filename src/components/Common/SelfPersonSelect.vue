@@ -3,10 +3,9 @@
         <el-select 
             :class="prefix!=undefined?'has-prefix':''"
             style="overflow:hidden;" 
-            v-model="personValue" 
             filterable
+            v-model="personValue" 
             :filter-method="filterMethod"
-            @visible-change="visibleChange"
             :size="size" 
             :multiple="multiple" 
             :disabled="disabled"
@@ -22,21 +21,30 @@
             :popper-class="popperClass"
             :reserve-keyword="reserveKeyword"
             :default-first-option="defaultFirstOption"
+            @visible-change="visibleChange"
             @change="change"
             @remove-tag="removeTag"
             @clear="clear"
             @blur="blur"
             @focus="focus"
         >
-            <span v-if="prefix!=undefined" slot="prefix" v-html="prefix"></span>
-            <span v-if="empty!=undefined" slot="empty" v-html="empty"></span>
+            <span 
+                v-if="prefix!=undefined" 
+                slot="prefix" 
+                v-html="prefix"
+            >
+            </span>
+            <span 
+                v-if="empty!=undefined" 
+                slot="empty" 
+                v-html="empty"
+            >
+            </span>
             <slot :option="filterOption"></slot>
         </el-select>
     </div>
 </template>
-
 <script>
-import $ from 'jquery'
 export default {
     name: 'person-select',
     props: {
@@ -304,7 +312,7 @@ export default {
         },
 
         //聚焦
-        focus(evnet) {
+        focus(event) {
             this.$emit("focus", event)
         }
     },
