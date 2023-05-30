@@ -2,10 +2,10 @@
     <div>
         <el-dialog
             class="public-model self-confirm" 
+            width="25rem"
             :title="title" 
             :visible.sync="visible" 
             :close-on-click-modal="false" 
-            width="25rem"
             @close="handleAction('cancel')"
         >
             <div class="tip-content">
@@ -17,11 +17,15 @@
                     type="primary" 
                     size="small" 
                     @click="handleAction('confirm')"
-                >{{ confirmButtonText }}</el-button>
+                >
+                    {{ confirmButtonText }}
+                </el-button>
                 <el-button 
                     size="small" 
                     @click="visible = false"
-                >{{ cancelButtonText }}</el-button>
+                >
+                    {{ cancelButtonText }}
+                </el-button>
             </span>
         </el-dialog>
     </div>
