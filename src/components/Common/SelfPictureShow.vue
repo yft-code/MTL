@@ -1,14 +1,18 @@
 <template>
     <div class="picture-show">
-        <picture-view ref="pictureViewRef" :img-path="imgPath" :show-title="showTitle" />
+        <picture-view 
+            ref="pictureViewRef" 
+            :img-path="imgPath" 
+            :show-title="showTitle"
+        />
         <div v-if="imgType == 'thumbnail' && urlArr && urlArr.length > 0">
-            <img 
+            <img
+                class="viewer-img"
                 v-for="(path, index) in urlArr"
                 :key="path"
                 :src="path"
-                class="viewer-img"
                 @click="showPicture(index)"
-            >
+            />
         </div>
         <img v-else
             class="image-icon" 
@@ -19,6 +23,7 @@
 </template>
 
 <script>
+import {getDriverFile} from '@/api/common'
 export default {
     data() {
         return {
@@ -50,6 +55,7 @@ export default {
         this.getUrlArr()
     },
     methods: {
+        // 获取批量的图片路径
         async getUrlArr(){
             this.urlArr = []
             for(let i = 0; i < this.imgPath.length; i++){
@@ -57,19 +63,19 @@ export default {
                 if(url.indexOf('blob') != -1){
                     this.urlArr.push(url)
                 }else{
-                    await this.$codePost('/service/get_driver_file/', {
+                 let res = await getDriverFile({
                         pre_path: this.prePath.pic,
                         path: url
-                    }).then(res=>{
-                        if(res.code == 200){
-                            this.urlArr.push(res.data)
+                    },{})
+                    if(res.code == 200){
+                        this.urlArr.push(res.data)
                         }else{
-                            this.urlArr.push(url)
-                        }
-                    })
+                        this.urlArr.push(url)
+                    }
                 }
             }
         },
+        
         //手动触发图片点击函数
         showPicture(index) {
             if (index == undefined) {
