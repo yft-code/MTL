@@ -826,7 +826,7 @@ export default {
                 switch(expr){
                     // 手游专家兼容性
                     case '10':
-                         res = expertTestStart(list, { operation: "开始测试", failed: true })
+                        res = await expertTestStart(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/compatibilityStartTest?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -836,7 +836,7 @@ export default {
                         break;
                     // 端游专家兼容性
                     case '11':
-                         res= expertTestStartPc(list, { operation: "开始测试", failed: true })
+                        res = await expertTestStartPc(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/compatibilityStartTestPC?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -846,7 +846,7 @@ export default {
                         break;
                     // 手游性能
                     case '20':
-                        res=mobilePerfTest(list, { operation: "开始测试", failed: true })
+                        res = await mobilePerfTest(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/performanceStartTest?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -856,7 +856,7 @@ export default {
                         break;
                     // 端游性能
                     case '21':
-                        res=mobilePerfTest(list, { operation: "开始测试", failed: true })
+                        res = await pcPerfTest(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/performanceStartTest?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -866,7 +866,7 @@ export default {
                         break;
                     // 手游弱网
                     case '22':
-                        res=mobileWeaknetTest(list, { operation: "开始测试", failed: true })
+                        res = await mobileWeaknetTest(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/weaknetStartTest?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -876,7 +876,7 @@ export default {
                         break;
                     // 端游弱网
                     case '23':
-                        res = pcWeaknetTest(list, { operation: "开始测试", failed: true })
+                        res = await pcWeaknetTest(list, { operation: "开始测试", failed: true })
                         if (res.code == 200) {
                             this.getTableData();
                             let href = `/mtl_test_platform/page/weaknetPCStartTest?project=${this.projectCode}&testRecordName=${res.data}&id=${item.id}&test_type=${item.test_type}`;
@@ -889,7 +889,7 @@ export default {
                         let href = `/mtl_test_platform/page/protocolStartTest?project=${this.projectCode}&testRecordName=${item.content_name}&id=${item.id}&test_type=${item.test_type}`;
                         window.open(href, "_blank");
                         break;
-                }   
+                }
             }
         },
 

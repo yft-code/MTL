@@ -6,14 +6,14 @@
             prop="level" 
             align="center" 
             sortable
-        >
-        </el-table-column>
+        />
         <el-table-column 
             v-for="brand in cpuBrand" 
             :key="brand" 
             :label="brand" 
             :prop="brand" 
-             align="center">
+             align="center"
+        >
             <template v-slot="scope">
                 <div v-for="(item,index) in scope.row[brand]" :key="index">
                     {{item}}

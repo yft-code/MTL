@@ -18,9 +18,8 @@
             </div>
     </div>
 </template>
-
 <script>
-    export default {
+export default {
         components: {
         },
         data() {
@@ -61,7 +60,6 @@
         },
     }
 </script>
-    
 <style lang='less' scoped>
     .advantages-div {
         width: 100%;

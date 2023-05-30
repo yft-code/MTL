@@ -35,7 +35,7 @@ export function getTestType(url,params,messageList) {
 export function updateApplicationWorktime(params,messageList) {
     return post('/service/update_application_worktime/',params,messageList)
 }
-
+// 修改测试接口人 
 export function updateApplicationProcess(params,messageList) {
     return post('/service/update_application_process/',params,messageList)
 }
