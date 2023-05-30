@@ -2,51 +2,55 @@
     <div class="performance-application">
         <div class="application-title">AppStore预审</div>
         <div class="container">
-            <!-- <div v-if="editType=='read' || editType=='edit'" class="page">
-                <span @click="jumpPage()" style="cursor:pointer">测试申请记录</span>
-                &nbsp;
-                <i class="el-icon-arrow-right"></i> 
-                &nbsp;
-                <span class="blue-span">查看详细信息</span>
-            </div> -->
             <div class="main-container">
                 <div class="area-div" v-if="oldData.edit == 1">
-                    <el-button v-if="editType == 'read'" type="primary" size="mini" @click="editType='edit'">编辑</el-button>
-                    <el-button v-else-if="editType == 'edit'" type="primary" size="mini" @click="submitTestApplication">保存</el-button>
-                    <el-button v-if="editType == 'edit'" size="mini" @click="cancel">取消</el-button>
+                    <el-button 
+                        v-if="editType == 'read'" 
+                        type="primary" size="mini" 
+                        @click="editType='edit'"
+                    >
+                        编辑
+                    </el-button>
+                    <el-button 
+                        v-else-if="editType == 'edit'" 
+                        type="primary" size="mini" 
+                        @click="submitTestApplication"
+                    >
+                        保存
+                    </el-button>
+                    <el-button 
+                        v-if="editType == 'edit'" 
+                        size="mini" 
+                        @click="cancel"
+                    >
+                        取消
+                    </el-button>
                 </div>
                 <el-form 
                     v-if="canShowForm"
                     id="applicationForm" 
-                    ref="applicationFormRef" 
+                    ref="applicationFormRef"
+                    label-position="right" 
+                    label-suffix=":"
+                    inline 
                     :disabled="editType == 'read'" 
                     :hide-required-asterisk="editType == 'read'" 
                     :model="applicationFormList" 
                     :rules="applicationFormRules" 
                     :show-message="false" 
-                    label-position="right" 
-                    label-suffix=":"
-                    inline>
+                >
                     <div class="area-div">
                         <div class="title-div">
                             <span class="title-span">基础信息</span>
-                            <hr>
+                            <hr/>
                         </div>
                     </div>
                     <div>
                         <div v-if="editType == 'read' || editType == 'edit'" style="margin-bottom:1rem;">
-                            <!-- <span class="read-item">
-                                <span class="title">申请人:</span>
-                                <span>{{ oldData.applicant }}</span>
-                            </span> -->
                             <span class="read-item">
                                 <span class="title">申请日期:</span>
                                 <span>{{ oldData.start_date }}</span>
                             </span>
-                            <!-- <span class="read-item">
-                                <span class="title">项目代号:</span>
-                                <span>{{ oldData.project }}</span>
-                            </span> -->
                             <span class="read-item">
                                 <span class="title">项目名称:</span>
                                 <span>{{ oldData.project_name }}</span>
@@ -73,25 +77,25 @@
                         >
                             <self-cascader 
                                 placeholder="请选择项目名称"
+                                valueKey="value"
                                 :selectValue.sync="applicationFormList.project"
                                 :options="projectClassifyArr"
-                                valueKey="value"
                                 @change="changeProject"         
                             />
                         </el-form-item>
                         <el-form-item 
                             v-if="editType == 'add' || editType == 'reAdd'" 
-                            class="short-form-item" 
+                            class="short-form-item"
+                            style="display:none" 
                             label="项目代号" 
                             prop="project"
-                            style="display:none"
                         >
                             <el-input v-model="applicationFormList.project" disabled></el-input>
                         </el-form-item>
-                        <el-form-item 
+                        <el-form-item
+                            v-if="editType == 'add' || editType == 'reAdd'" 
                             :class="{ 'short-form-item': true, 'right-form-item': editType == 'add' || editType == 'reAdd' }" 
                             label="包体版本" 
-                            v-if="editType == 'add' || editType == 'reAdd'"
                             prop="test_version"
                         >
                             <el-input v-model="applicationFormList.test_version" placeholder="请输入包体版本"></el-input>
@@ -104,17 +108,14 @@
                         >
                             <el-input v-model="applicationFormList.contact_person" placeholder="请输入接口人"></el-input>
                         </el-form-item>
-                        
                         <el-form-item class="short-form-item right-form-item end-date-item" label="最迟报告日期" v-if="editType == 'add' || editType == 'reAdd'" prop="end_date">
                             <el-date-picker
                                 v-model="applicationFormList.end_date"
                                 type="date"
                                 value-format="yyyy-MM-dd"
                                 placeholder="请选择最迟报告日期"
-                            >
-                            </el-date-picker>
+                            />
                         </el-form-item>
-                        
                         <el-form-item class="line-form-item" label="测试原因" prop="test_reason">
                             <el-input v-model="applicationFormList.test_reason" placeholder="请输入测试原因"></el-input>
                         </el-form-item>
@@ -122,30 +123,12 @@
                     <div class="area-div">
                         <div class="title-div">
                             <span class="title-span">测试设备</span>
-                            <hr></hr>
+                            <hr/>
                         </div>
                         <div>
                             <div v-if="editType != 'read'" class="platform-div">
                                 <div class="platform-title">iOS最低配置</div>
                                 <div class="platform-content">
-                                    <!-- <el-row>
-                                        <el-col :span="8">
-                                            <el-form-item label="测试机型" prop="ios_model">
-                                                <el-input v-model="applicationFormList.ios_model" placeholder="请输入测试机型"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="8">
-                                            <el-form-item label="系统版本" prop="ios_os">
-                                                <el-input v-model="applicationFormList.ios_os" placeholder="请输入系统版本"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="8">
-                                            <el-form-item label="是否需要测试iPad">
-                                                <el-radio v-model="applicationFormList.ipad_need" label="1">是</el-radio>
-                                                <el-radio v-model="applicationFormList.ipad_need" label="0">否</el-radio>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row> -->
                                     <el-form-item class="short-form-item" label="测试机型" prop="ios_model">
                                         <el-input v-model="applicationFormList.ios_model" placeholder="请输入测试机型"></el-input>
                                     </el-form-item>
@@ -164,10 +147,14 @@
                             <div class="area-div">
                                 <div class="title-div">
                                     <span class="title-span">测试用例</span>
-                                    <hr>
+                                    <hr/>
                                 </div>
                                 <div style="width:100%;">
-                                    <input-and-upload v-if="editType!='read'" ref="testCaseRef" :select-data="testCaseDate"/>
+                                    <input-and-upload 
+                                        v-if="editType!='read'" 
+                                        ref="testCaseRef" 
+                                        :select-data="testCaseDate"
+                                    />
                                     <div v-else>
                                         <input-and-upload-read 
                                             :text="oldData.test_case" 
@@ -182,7 +169,7 @@
                             <div class="area-div">
                                 <div class="title-div">
                                     <span class="title-span">测试包体</span>
-                                    <hr>
+                                    <hr/>
                                 </div>
                                 <div style="width:100%;">
                                     <input-and-upload 
@@ -222,17 +209,15 @@
             </div>
         </div>
         <div class="application-footer">
-            <el-button 
+            <el-button
+                v-if="editType == 'add' || editType == 'edit' || editType == 'reAdd'" 
+                type="primary"
                 class="submit-btn"
                 :disabled="isSubmit"
-                v-if="editType == 'add' || editType == 'edit' || editType == 'reAdd'"
-                type="primary" 
-                @click="submitTestApplication">提交</el-button>
-            <!-- <el-button
-                class="staging-btn"
+                @click="submitTestApplication
             >
-                暂存
-            </el-button> -->
+                提交
+            </el-button>
         </div>
     </div>
 </template>
@@ -241,412 +226,347 @@ import InputAndUpload from '@/components/Common/InputAndUpload'
 import InputAndUploadRead from '@/components/Common/InputAndUploadRead'
 import formRule from "@/utils/formRule.js"
 import { mapState } from 'vuex'
-export default {
-    components: {
-        InputAndUpload,
-        InputAndUploadRead
-    },
-    data() {
-        return {
-            isSubmit: false,
-            addAndroidInputShow: false,
-            addIOSInputShow: false,
-            addAndroidDeviceName: "",
-            addIOSDeviceName: "",
-            isSimulatorCheckedAll: 0,
-            selectAll: false,
-            quality_option: "2",
-            addDeviceLable: "",
-            addDeviceName: "",
-            addDeviceForm: {
-                value: ""
-            },
-            // 选择的设备项
-            editType: "add",//add(新增),read(查看),edit(修改),reAdd(复测)，add没有id，其他三种模式都需要id，从id中获取到已有的申请数据
-            canShowForm: false,
-            applicationId: "",
-            oldData: {},
-            // 表单数据
-            applicationFormList: {
-                project: "", //项目代号
-                project_name: "", //项目名称
-                test_version: "", //包体版本
-                test_reason: "", //测试原因
-                end_date: "", //结束日期
-                contact_person: "", //接口人
-                game_quality: "", //登录服务器
-                remarks: "", //备注
-                disk_type: "", // 硬盘类型
-                system_version: "", // 系统版本
-                cpu_name: "", // cpu
-                test_tool: "",
-                mem_size: "",
-                gpu_name: "",
-                server: "",
-                resolution: "",
-                test_type: '20',
-                android_device: "", // android选择的机型
-                ios_device: "", // ios选择的机型
-            },
-            // 提交申请需要的常规参数
-            applyList: [
-                'project',
-                'project_name',
-                'test_version',
-                'test_reason',
-                'contact_person',
-                'test_type',
-                'end_date',
-                'remarks',
-                'game_quality'
-            ],
-            remarks: "登陆服务器：\n测试账号：\n测试密码：\n其他要求：",
-            testCaseDate: {
-                rightTip: "(如不填写，按照MTL常规测试进行)",
-                radioOption: [
-                    { value: "textarea", label: "直接填写" },
-                    { value: "file", label: "上传测试用例" }
-                ],
-                selectDict: {
-                    textarea: {
-                        type: "textarea",
-                        placeholder: "请填写测试用例",
-                        value: "",
-                    },
-                    file: {
-                        type: "fileArr",
-                        fileAccept: ".txt,.xmind,.doc,.docx,.xls,.xlsx,.rar,.zip",
-                        value: "",
-                    }
-                }
-            },
-            playData: {
-                radioOption: [
-                    { value: "textarea", label: "直接填写" },
-                    { value: "file", label: "上传玩法说明" },
-                ],
-                selectDict: {
-                    textarea: {
-                        type: "textarea",
-                        placeholder: "请填入玩法说明",
-                        value: "",
-                    },
-                    file: {
-                        type: "fileArr",
-                        fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
-                        value: "",
-                    },
-                    history: {
-                        value: "",
-                    },
-                }
-            },
-            protocolData: {
-                radioOption: [
-                    { value: "textarea", label: "直接填写" },
-                    { value: "file", label: "上传具体协议" },
-                ],
-                selectDict: {
-                    textarea: {
-                        type: "textarea",
-                        placeholder: "请填入具体协议",
-                        value: "",
-                    },
-                    file: {
-                        type: "fileArr",
-                        fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
-                        value: "",
-                    },
-                    history: {
-                        value: "",
-                    },
-                }
-            },
-            //测试包体栏
-            testInclusionsData: {
-                radioOption: [
-                    { value: "textarea", label: "包体链接" },
-                    { value: "file", label: "本地上传" },
-                    // { value: "history", label: "历史包体" },
-                ],
-                selectDict: {
-                    textarea: {
-                        type: "textarea",
-                        placeholder: "请输入包体地址",
-                        value: "",
-                    },
-                    file: {
-                        type: "fileArr",
-                        fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
-                        value: "",
-                    },
-                    history: {
-                        value: "",
-                    },
-                }
-            },
-            // 表单校验规则
-            applicationFormRules: {
-                project: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                test_version: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                test_reason: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                end_date: [{ required: true, trigger: 'change' }],
-                contact_person: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                disk_type: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                system_version: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                cpu_name: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                test_tool: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                mem_size: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                gpu_name: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                server: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                resolution: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                test_type: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-            },
-            // 表单校验规则
-            addDeviceFormRules: {
-                label: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-                value: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
-            },
-            // 项目组名称下拉框数据
-            projectClassifyArr: [],
-        }
-    },
-    computed: {
-        ...mapState(['getUserEmail']),
-        userEmail() {
-            return this.getUserEmail || "";
+import {getTaskProject,getTestApplyById,submitApplication} from '@/api/expertServices'
+    export default {
+        components: {
+            InputAndUpload,
+            InputAndUploadRead
         },
-        projectCode() {
-            return this.$store.getters.getProjectCode;
-        },
-        isTester() {
-            return this.$store.getters.getIsTester;
-        },
-    },
-    created() {
-        this.getData();
-    },
-    methods: {
-        //获取项目组选项
-        getProjectOption() {
-            // console.log(0)
-            this.$codePost("/service/get_create_task_project/", { operation: "获取项目组数据", failed: true }).then(res => {
-                // console.log(res)
-                if(res.code == 200){
-                    this.projectClassifyArr = res.data;
-                    // console.log(this.projectClassifyArr)
-                    if (this.editType == "add") {
-                        // console.log(this.editType)
-                        // console.log(this.projectCode)
-                        if (this.projectCode != "all") {
-                            //如果当前项目组不是“全部”，默认设置申请项目组为当前项目组
-                            this.applicationFormList.project = this.projectCode;
-                            this.changeProject();
+        data() {
+            return {
+                isSubmit: false,
+                addAndroidInputShow: false,
+                addIOSInputShow: false,
+                addAndroidDeviceName: "",
+                addIOSDeviceName: "",
+                isSimulatorCheckedAll: 0,
+                selectAll: false,
+                quality_option: "2",
+                addDeviceLable: "",
+                addDeviceName: "",
+                addDeviceForm: {
+                    value: ""
+                },
+                //选择的设备项 add(新增),read(查看),edit(修改),reAdd(复测)，add没有id，其他三种模式都需要id，从id中获取到已有的申请数据
+                editType: "add",
+                canShowForm: false,
+                applicationId: "",
+                oldData: {},
+                // 表单数据
+                applicationFormList: {
+                    //项目代号
+                    project: "",
+                    //项目名称 
+                    project_name: "",
+                    //包体版本 
+                    test_version: "",
+                    //测试原因 
+                    test_reason: "",
+                    //结束日期 
+                    end_date: "", 
+                    //接口人
+                    contact_person: "",
+                    //登录服务器 
+                    game_quality: "", 
+                    //备注
+                    remarks: "",
+                    // 硬盘类型
+                    disk_type: "",
+                    // 系统版本 
+                    system_version: "",
+                    // cpu 
+                    cpu_name: "", 
+                    test_tool: "",
+                    mem_size: "",
+                    gpu_name: "",
+                    server: "",
+                    resolution: "",
+                    test_type: '20',
+                    // android选择的机型
+                    android_device: "", 
+                    // ios选择的机型
+                    ios_device: "", 
+                },
+                // 提交申请需要的常规参数
+                applyList: [
+                    'project',
+                    'project_name',
+                    'test_version',
+                    'test_reason',
+                    'contact_person',
+                    'test_type',
+                    'end_date',
+                    'remarks',
+                    'game_quality'
+                ],
+                remarks: "登陆服务器：\n测试账号：\n测试密码：\n其他要求：",
+                testCaseDate: {
+                    rightTip: "(如不填写，按照MTL常规测试进行)",
+                    radioOption: [
+                        { value: "textarea", label: "直接填写" },
+                        { value: "file", label: "上传测试用例" }
+                    ],
+                    selectDict: {
+                        textarea: {
+                            type: "textarea",
+                            placeholder: "请填写测试用例",
+                            value: "",
+                        },
+                        file: {
+                            type: "fileArr",
+                            fileAccept: ".txt,.xmind,.doc,.docx,.xls,.xlsx,.rar,.zip",
+                            value: "",
                         }
                     }
-                }
-                this.$store.commit("setPageIsLoading", false);
-            })
-        },
-
-        // 获取需要的数据（获取数据有顺序，需要同步功能，因此该函数内容不能直接写在create里而要async）
-        async getData(){
-            this.getProjectOption();
-            let path = this.$route.path;
-            if (path == "/mtl_test_platform/page/expertServices/appstore") {
-                //新申请
-                this.editType = "add";
-                this.applicationFormList.contact_person = this.userEmail;
-                this.canShowForm = true;
-            } else if (path == "/expertPerformancePC/page/applicationDetails") {
-                //查看
-                this.editType = "read";
-                this.getOldApplication();
-            } else {
-                //复测
-                this.editType = "reAdd";
-                this.getOldApplication();
+                },
+                playData: {
+                    radioOption: [
+                        { value: "textarea", label: "直接填写" },
+                        { value: "file", label: "上传玩法说明" },
+                    ],
+                    selectDict: {
+                        textarea: {
+                            type: "textarea",
+                            placeholder: "请填入玩法说明",
+                            value: "",
+                        },
+                        file: {
+                            type: "fileArr",
+                            fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
+                            value: "",
+                        },
+                        history: {
+                            value: "",
+                        },
+                    }
+                },
+                protocolData: {
+                    radioOption: [
+                        { value: "textarea", label: "直接填写" },
+                        { value: "file", label: "上传具体协议" },
+                    ],
+                    selectDict: {
+                        textarea: {
+                            type: "textarea",
+                            placeholder: "请填入具体协议",
+                            value: "",
+                        },
+                        file: {
+                            type: "fileArr",
+                            fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
+                            value: "",
+                        },
+                        history: {
+                            value: "",
+                        },
+                    }
+                },
+                //测试包体栏
+                testInclusionsData: {
+                    radioOption: [
+                        { value: "textarea", label: "包体链接" },
+                        { value: "file", label: "本地上传" },
+                        // { value: "history", label: "历史包体" },
+                    ],
+                    selectDict: {
+                        textarea: {
+                            type: "textarea",
+                            placeholder: "请输入包体地址",
+                            value: "",
+                        },
+                        file: {
+                            type: "fileArr",
+                            fileAccept: ".ipa,.apk,.exe,.rar,.zip,.jpg,.jpeg,.gif,.png,.bmp",
+                            value: "",
+                        },
+                        history: {
+                            value: "",
+                        },
+                    }
+                },
+                // 表单校验规则
+                applicationFormRules: {
+                    project: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    test_version: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    test_reason: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    end_date: [{ required: true, trigger: 'change' }],
+                    contact_person: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    disk_type: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    system_version: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    cpu_name: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    test_tool: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    mem_size: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    gpu_name: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    server: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    resolution: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    test_type: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                },
+                // 表单校验规则
+                addDeviceFormRules: {
+                    label: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                    value: [{ required: true, validator: formRule.validateStr, trigger: 'blur' }],
+                },
+                // 项目组名称下拉框数据
+                projectClassifyArr: [],
             }
         },
-
-
-        //获取已有申请数据
-        getOldApplication() {
-            this.applicationId = this.$route.query.id;
-            if (this.applicationId == undefined) {
-                //没有获取到id
-                this.errorApplicationDeal("申请id丢失，将为您跳转到测试申请界面");
-            } else {
-                let list = { test_type: 21, id: this.applicationId };
-                this.$codePost("/PerformancePCTest/get_test_apply_by_id/", list).then(res => {
-                    if (res.code == 200) {
-                        this.oldData = JSON.parse(JSON.stringify(res.data));
-                        this.dealFileAndTest();
-                        for (let i in this.applyList) {
-                            let k = this.applyList[i]
-                            if(k == 'game_quality'){
-                                this.quality_option = res.data[k].split('_')[0]
-                                this.applicationFormList[k] = this.quality_option == "1" ? res.data[k].split('_')[1]: ""
-                            }else{
-                                this.applicationFormList[k] = res.data[k];
+        computed: {
+            ...mapState(['getUserEmail']),
+            userEmail() {
+                return this.getUserEmail || "";
+            },
+            projectCode() {
+                return this.$store.getters.getProjectCode;
+            },
+            isTester() {
+                return this.$store.getters.getIsTester;
+            },
+        },
+        created() {
+            this.getData();
+        },
+        methods: {
+            //获取项目组选项
+            async getProjectOption() {
+               let res= await getTaskProject({ operation: "获取项目组数据", failed: true },{}).then(res => {
+                    // console.log(res)
+                    if(res.code == 200){
+                        this.projectClassifyArr = res.data;
+                        // console.log(this.projectClassifyArr)
+                        if (this.editType == "add") {
+                            // console.log(this.editType)
+                            // console.log(this.projectCode)
+                            if (this.projectCode != "all") {
+                                //如果当前项目组不是“全部”，默认设置申请项目组为当前项目组
+                                this.applicationFormList.project = this.projectCode;
+                                this.changeProject();
                             }
                         }
-                        let deviceData = JSON.parse(this.oldData.device)
-                        // 处理已有的设备数据
-                        this.deviceList = []
-                        for(let i in deviceData){
-                            // console.log(deviceData[i])
-                            this.applicationFormList[deviceData[i].label] = deviceData[i].value;
-                            this.deviceList.push(deviceData[i].label)
-                        }
-
-                        //复测时，最迟报告日期初始化为空
-                        if (this.editType == "reAdd") {
-                            this.applicationFormList.end_date = "";
-                        }
-                        this.canShowForm = true;
-                    } else {
-                        this.errorApplicationDeal(res.msg);
                     }
-                })
-            }
-        },
+                    this.$store.commit("setPageIsLoading", false);
+            },
 
-        //跳转到测试记录界面
-        // jumpPage() {
-        //     this.$router.push({
-        //         path: '/expertPerformancePC/page/applicationRecord',
-        //         query: { project: this.projectCode }
-        //     })
-        // },
-
-        //处理文件相关的数据
-        dealFileAndTest() {
-            this.testCaseData.selectDict.textarea.value = this.oldData.test_case;
-            this.testInclusionsData.selectDict.textarea.value = this.oldData.test_inclusions_other;
-            this.testCaseData.selectDict.file.value = this.oldData.test_case_file;
-            this.testInclusionsData.selectDict.file.value = this.oldData.test_inclusions_file;
-            this.testInclusionsData.selectDict.history.value = this.oldData.test_history_inclusions;
-        },
-
-        //申请记录异常
-        errorApplicationDeal(msg) {
-            this.$message.error(msg);
-            setTimeout(() => {
-                this.$router.push({
-                    path: '/expertPerformancePC/page/testApplication',
-                    query: { project: this.projectCode }
-                })
-            }, 1000)
-        },
-
-
-        //修改项目组时，获取当前选中的项目组名
-        changeProject() {
-            let projectList = this.$publicJS.getCascacaderChoosed(this.projectClassifyArr, this.applicationFormList.project);
-            this.applicationFormList.project_name = projectList.label;
-        },
-
-
-        //提交申请
-        submitTestApplication() {
-            this.isSubmit = true;
-            // let hasError = this.$publicJS.checkFormData(this, "applicationFormRef", "您有必填项未填或填写不规范！");
-            // if(!hasError) {         
-            //     //必填项已经填写
-            //     this.$store.commit("setPageIsLoading", true);
-            //     let formData = new FormData();
-            //     //引入常规表单数据
-            //     for(let i in this.applyList){
-            //         let k = this.applyList[i]
-            //         if (typeof (this.applicationFormList[k]) == "object") {
-            //             formData.append(k, JSON.stringify(this.applicationFormList[k]));
-            //         } else if(k == 'game_quality') {
-            //             let quality = "装包后第一次进入的默认画质"
-            //             if (this.applicationFormList[k]){
-            //                 quality = this.applicationFormList[k]
-            //             }
-            //             formData.append(k, this.quality_option + '_' + quality);
-            //         }else {
-            //             formData.append(k, this.applicationFormList[k]);
-            //         }
-            //     }
-                
-            //     //处理测试用例数据
-            //     let testCaseResult = this.$refs.testCaseRef.getResult();
-            //     formData.append("test_case", testCaseResult.textareaValue);
-            //     if (testCaseResult.type == "file" && testCaseResult.fileData.length > 0) {
-            //         for (let i = 0; i < testCaseResult.fileData.length; i++) {
-            //             formData.append("test_case_file", testCaseResult.fileData[i].raw);
-            //         }
-            //     }
-            //     //处理测试包体数据
-            //     let testInclusionsResult = this.$refs.testInclusionsRef.getResult();
-            //     formData.append("test_inclusions_other", testInclusionsResult.textareaValue);
-            //     formData.append("test_history_inclusions", JSON.stringify(testInclusionsResult.historyArr));
-            //     if (testInclusionsResult.type == "file" && testInclusionsResult.fileData.length > 0) {
-            //         for (let i = 0; i < testInclusionsResult.fileData.length; i++) {
-            //             formData.append("test_inclusions_file", testInclusionsResult.fileData[i].raw);
-            //         }
-            //     }
-
-            //     if (this.editType == "edit" || this.editType == "reAdd") {
-            //         formData.append("old_test_account_file", testAccountResult.oldFileData.join(","));
-            //         formData.append("old_test_case_file", testCaseResult.oldFileData.join(","));
-            //         formData.append("old_test_inclusions_file", testInclusionsResult.oldFileData.join(","));
-            //         formData.append("old_test_history_inclusions", testInclusionsResult.oldHistoryData.join(","));
-            //     }
-            //     this.axiosFormData(formData);
-            // }else{
-            //     this.isSubmit = false;
-            // }
-        },
-
-
-        //提交申请表单
-        axiosFormData(formData) {
-            let postApp = "";
-            let operation = "";
-            if (this.editType == "edit") {
-                //编辑
-                postApp = "update_expert_test_apply";
-                operation = "编辑申请";
-                formData.append("id", this.applicationId);
-            } else {
-                //新的申请
-                postApp = "insert_test_apply";
-                operation = "申请";
-            }
-            // for (var key of formData.keys()) {
-            //     console.log(key, formData.get(key));
-            // }
-
-            this.$formPost("/PerformancePCTest/" + postApp + "/", formData, { operation: operation, success: true, failed: true }).then(res => {
-                this.isSubmit = false;
-                this.$store.commit("setPageIsLoading", false);
-                if (res.code == 200) {
-                    if (this.editType == "edit") {
-                        //编辑申请时跳转到当前申请查看界面
-                        this.editType = "read";
-                        this.getOldApplication();
-                    } else {
-                        //新的申请提交成功后跳转到申请记录
-                        this.$router.push({
-                            path: '/expertPerformancePC/page/applicationRecord',
-                            query: { project: this.projectCode }
-                        })
-                    }
-
+            // 获取需要的数据（获取数据有顺序，需要同步功能，因此该函数内容不能直接写在create里而要async）
+            async getData(){
+                this.getProjectOption();
+                let path = this.$route.path;
+                if (path == "/mtl_test_platform/page/expertServices/appstore") {
+                    //新申请
+                    this.editType = "add";
+                    this.applicationFormList.contact_person = this.userEmail;
+                    this.canShowForm = true;
+                } else if (path == "/expertPerformancePC/page/applicationDetails") {
+                    //查看
+                    this.editType = "read";
+                    this.getOldApplication();
+                } else {
+                    //复测
+                    this.editType = "reAdd";
+                    this.getOldApplication();
                 }
-            })
+            },
+            //获取已有申请数据
+            async getOldApplication() {
+                this.applicationId = this.$route.query.id;
+                if (this.applicationId == undefined) {
+                    //没有获取到id
+                    this.errorApplicationDeal("申请id丢失，将为您跳转到测试申请界面");
+                } else {
+                    let list = { test_type: 21, id: this.applicationId };
+                    let res = await getTestApplyById(list,{})
+                        if (res.code == 200) {
+                            this.oldData = JSON.parse(JSON.stringify(res.data));
+                            this.dealFileAndTest();
+                            for (let i in this.applyList) {
+                                let k = this.applyList[i]
+                                if(k == 'game_quality'){
+                                    this.quality_option = res.data[k].split('_')[0]
+                                    this.applicationFormList[k] = this.quality_option == "1" ? res.data[k].split('_')[1]: ""
+                                }else{
+                                    this.applicationFormList[k] = res.data[k];
+                                }
+                            }
+                            let deviceData = JSON.parse(this.oldData.device)
+                            // 处理已有的设备数据
+                            this.deviceList = []
+                            for(let i in deviceData){
+                                this.applicationFormList[deviceData[i].label] = deviceData[i].value;
+                                this.deviceList.push(deviceData[i].label)
+                            }
+                            //复测时，最迟报告日期初始化为空
+                            if (this.editType == "reAdd") {
+                                this.applicationFormList.end_date = "";
+                            }
+                            this.canShowForm = true;
+                        } else {
+                            this.errorApplicationDeal(res.msg);
+                        }
+                }
+            },
+            //处理文件相关的数据
+            dealFileAndTest() {
+                this.testCaseData.selectDict.textarea.value = this.oldData.test_case;
+                this.testInclusionsData.selectDict.textarea.value = this.oldData.test_inclusions_other;
+                this.testCaseData.selectDict.file.value = this.oldData.test_case_file;
+                this.testInclusionsData.selectDict.file.value = this.oldData.test_inclusions_file;
+                this.testInclusionsData.selectDict.history.value = this.oldData.test_history_inclusions;
+            },
+            //申请记录异常
+            errorApplicationDeal(msg) {
+                this.$message.error(msg);
+                setTimeout(() => {
+                    this.$router.push({
+                        path: '/expertPerformancePC/page/testApplication',
+                        query: { project: this.projectCode }
+                    })
+                }, 1000)
+            },
+            //修改项目组时，获取当前选中的项目组名
+            changeProject() {
+                let projectList = this.$publicJS.getCascacaderChoosed(this.projectClassifyArr, this.applicationFormList.project);
+                this.applicationFormList.project_name = projectList.label;
+            },
+            //提交申请
+            submitTestApplication() {
+                this.isSubmit = true;
+            },
+            //提交申请表单
+            async axiosFormData(formData) {
+                let postApp = "";
+                let operation = "";
+                if (this.editType == "edit") {
+                    //编辑
+                    postApp = "update_expert_test_apply";
+                    operation = "编辑申请";
+                    formData.append("id", this.applicationId);
+                } else {
+                    //新的申请
+                    postApp = "insert_test_apply";
+                    operation = "申请";
+                }
+                let res = await submitApplication("/PerformancePCTest/" + postApp + "/", formData, { operation: operation, success: true, failed: true })
+                    this.isSubmit = false;
+                    this.$store.commit("setPageIsLoading", false);
+                    if (res.code == 200) {
+                        if (this.editType == "edit") {
+                            //编辑申请时跳转到当前申请查看界面
+                            this.editType = "read";
+                            this.getOldApplication();
+                        } else {
+                            //新的申请提交成功后跳转到申请记录
+                            this.$router.push({
+                                path: '/expertPerformancePC/page/applicationRecord',
+                                query: { project: this.projectCode }
+                            })
+                        }
+                }
+            },
+            //取消编辑
+            cancel() {
+                this.editType = "read";
+                this.getOldApplication();
+            }
         },
-        //取消编辑
-        cancel() {
-            this.editType = "read";
-            this.getOldApplication();
-        }
-    },
-
 }
 </script>
 
