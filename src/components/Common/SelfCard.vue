@@ -7,25 +7,24 @@
             </div>
         </div>
         <div class="card-content-div">
-            <pass-rate ref="passRateRef" v-if="cardName == '测试通过率'" :passRate="passRate" :questionData="questionData"></pass-rate>
+            <pass-rate 
+                v-if="cardName == '测试通过率'" 
+                ref="passRateRef" 
+                :passRate="passRate" 
+                :questionData="questionData"
+            >
+            </pass-rate>
             <test-record v-if="cardName == '测试协议'" :recordData="recordData"></test-record>
-            <level-table :isReport="true" v-if="cardName == 'P0、P1问题'" :isChackData="true" :tableData="criticalQuestion"></level-table>
+            <level-table 
+                v-if="cardName == 'P0、P1问题'" 
+                :isReport="true" 
+                :isChackData="true" 
+                :tableData="criticalQuestion"
+            >
+            </level-table>
             <question-detail v-if="cardName == '问题详情' && recordData" :tableData="recordData"></question-detail>
         </div>
     </el-card>
-    <!-- <div class="report-card">
-        <el-card class="type-card">
-            <div class="item-title">
-                {{ cardName }}
-            </div>
-            <div>
-                <pass-rate ref="passRateRef" v-if="cardName == '测试通过率'" :passRate="passRate" :questionData="questionData"></pass-rate>
-                <test-record class="static-table-div" v-if="cardName == '测试协议'" :recordData="recordData"></test-record>
-                <level-table class="static-table-div" :isReport="true" v-if="cardName == 'P0、P1问题'" :isChackData="true" :tableData="criticalQuestion"></level-table>
-                <question-detail class="static-table-div" v-if="cardName == '问题详情' && recordData" :tableData="recordData"></question-detail>
-            </div>
-        </el-card>
-    </div> -->
 </template>
 
 <script> 
@@ -72,16 +71,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='less' scoped>
 .type-card {
     margin-top: 18px;
 }
 .item-title {
     font-size: 18px;
     margin-left: 12px;
-    /*
-    margin-top: 5px;
-    */
     .title-content {
         margin-left: 5px;
         color: #666666;
