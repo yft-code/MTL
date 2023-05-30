@@ -3,25 +3,40 @@
         <div class="card-title" @click="show = !show" >
             <div class="title">{{ cardName }}</div>
             <div class="other-span"></div>
-            <div class="expand-div" v-if="!isPreview">
+            <div v-if="!isPreview" class="expand-div">
                 <div class="expand-icon">
                     <i :class="[show ? 'el-icon-arrow-up':'el-icon-arrow-down']" style="color:#ffffff"></i>
                 </div>
                 <div class="expand">{{ show ? '收起':'展开' }}</div>
             </div>
-            
         </div>
         <div v-if="show" class="card-body">
-            <!-- <el-card style="margin-top: 10px;"> -->
             <el-card style="margin: 5px;">
-                <pass-rate ref="passRateRef" v-if="cardName == '测试通过率'" :passRate="passRate"></pass-rate>
+                <pass-rate 
+                    v-if="cardName == '测试通过率'" 
+                    ref="passRateRef"  
+                    :passRate="passRate"
+                >
+                </pass-rate>
                 <question-static v-if="cardName == '测试问题统计'" :questionStatic="questionStatic"></question-static>
                 <test-record v-if="cardName == '测试情况'" :recordData="recordData"></test-record>
                 <test-record v-if="cardName == '测试协议'" :recordData="recordData"></test-record>
-                <!-- <question-table style="width:98%; margin:auto;" :isReport="true" v-if="cardName == '问题汇总' || cardName == 'P0、P1问题'" :isChackData="true" :tableData="questionData"></question-table> -->
-                <question-table style="width:98%; margin:auto;" :isReport="true" v-if="cardName == '问题汇总'" :isChackData="true" :tableData="questionData"></question-table>
+                <question-table
+                    v-if="cardName == '问题汇总'"  
+                    style="width:98%; margin:auto;" 
+                    :isReport="true" 
+                    :isChackData="true" 
+                    :tableData="questionData"
+                >
+                </question-table>
                 <question-detail v-if="cardName == '问题详情' && recordData" :tableData="recordData"></question-detail>
-                <level-table :isReport="true" v-if="cardName == 'P0、P1问题'" :isChackData="true" :tableData="criticalQuestion"></level-table>
+                <level-table
+                    v-if="cardName == 'P0、P1问题'" 
+                    :isReport="true"  
+                    :isChackData="true" 
+                    :tableData="criticalQuestion"
+                >
+                </level-table>
             </el-card>
         </div>
     </div>
