@@ -1,19 +1,24 @@
 <template>
-    <el-form-item class="self-form-item" :label="formItem.label" :prop="formItem.name" :class="formItem.class">
+    <el-form-item 
+        class="self-form-item"
+        :class="formItem.class" 
+        :label="formItem.label" 
+        :prop="formItem.name" 
+    >
         <el-input
             v-if="formItem.type == 'input'"
-            v-model="value" 
+            v-model="value"
+            clearable 
             :placeholder="formItem.placeholder"
-            clearable
-            >
+        >
         </el-input>
         <el-select
             v-else-if="formItem.type == 'select'"
-            v-model="value" 
+            v-model="value"
+            clearable 
             :placeholder="formItem.placeholder"
             @change="changeValue"
-            clearable
-            >
+        >
             <el-option 
                 v-for="(item,index) in formItem.options" 
                 :key="index" 
@@ -23,12 +28,12 @@
         </el-select>
         <el-date-picker
             v-else-if="formItem.type == 'date'"
-            v-model="value" 
-            :placeholder="formItem.placeholder"
+            v-model="value"
             type="date"
             clearable
-            value-format="yyyy-MM-dd"
-            >
+            value-format="yyyy-MM-dd" 
+            :placeholder="formItem.placeholder"  
+        >
         </el-date-picker>
         <self-cascader 
             v-else-if="formItem.type == 'cascader'"
@@ -40,11 +45,12 @@
             />
         <self-person-select 
             v-else-if="formItem.type == 'personSelect'"
+            clearable
             :person.sync="value" 
             :option-data="formItem.options" 
             :email-key="formItem.emailKey"
             :cn-name-key="formItem.cnNameKey"
-            clearable
+            
             >
             <template slot-scope="personSelect">
                 <el-option 
@@ -89,10 +95,9 @@ export default {
         }
     },
     mounted() {
-
+            console.log('formItem',formItem);
     },
     methods: {
-        //change事件
         changeValue() {
             this.$emit("change");
         },
