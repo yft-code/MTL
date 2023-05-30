@@ -16,7 +16,7 @@
                         type="primary" size="mini" 
                         @click="submitTestApplication"
                     >
-                        保存
+                    保存
                     </el-button>
                     <el-button 
                         v-if="editType == 'edit'" 
@@ -38,7 +38,7 @@
                     :model="applicationFormList" 
                     :rules="applicationFormRules" 
                     :show-message="false" 
-                >
+                   >
                     <div class="area-div">
                         <div class="title-div">
                             <span class="title-span">基础信息</span>
@@ -77,18 +77,18 @@
                         >
                             <self-cascader 
                                 placeholder="请选择项目名称"
-                                valueKey="value"
                                 :selectValue.sync="applicationFormList.project"
                                 :options="projectClassifyArr"
+                                valueKey="value"
                                 @change="changeProject"         
                             />
                         </el-form-item>
                         <el-form-item 
                             v-if="editType == 'add' || editType == 'reAdd'" 
-                            class="short-form-item"
-                            style="display:none" 
+                            class="short-form-item" 
                             label="项目代号" 
                             prop="project"
+                            style="display:none"
                         >
                             <el-input v-model="applicationFormList.project" disabled></el-input>
                         </el-form-item>
@@ -108,13 +108,19 @@
                         >
                             <el-input v-model="applicationFormList.contact_person" placeholder="请输入接口人"></el-input>
                         </el-form-item>
-                        <el-form-item class="short-form-item right-form-item end-date-item" label="最迟报告日期" v-if="editType == 'add' || editType == 'reAdd'" prop="end_date">
+                        <el-form-item
+                            v-if="editType == 'add' || editType == 'reAdd'"  
+                            class="short-form-item right-form-item end-date-item" 
+                            label="最迟报告日期" 
+                            prop="end_date"
+                        >
                             <el-date-picker
                                 v-model="applicationFormList.end_date"
                                 type="date"
                                 value-format="yyyy-MM-dd"
                                 placeholder="请选择最迟报告日期"
-                            />
+                            >
+                            </el-date-picker>
                         </el-form-item>
                         <el-form-item class="line-form-item" label="测试原因" prop="test_reason">
                             <el-input v-model="applicationFormList.test_reason" placeholder="请输入测试原因"></el-input>
@@ -147,7 +153,7 @@
                             <div class="area-div">
                                 <div class="title-div">
                                     <span class="title-span">测试用例</span>
-                                    <hr/>
+                                    <hr>
                                 </div>
                                 <div style="width:100%;">
                                     <input-and-upload 
@@ -169,7 +175,7 @@
                             <div class="area-div">
                                 <div class="title-div">
                                     <span class="title-span">测试包体</span>
-                                    <hr/>
+                                    <hr>
                                 </div>
                                 <div style="width:100%;">
                                     <input-and-upload 
@@ -211,13 +217,10 @@
         <div class="application-footer">
             <el-button
                 v-if="editType == 'add' || editType == 'edit' || editType == 'reAdd'" 
-                type="primary"
                 class="submit-btn"
-                :disabled="isSubmit"
-                @click="submitTestApplication
-            >
-                提交
-            </el-button>
+                type="primary"
+                :disabled="isSubmit" 
+                @click="submitTestApplication">提交</el-button>
         </div>
     </div>
 </template>
@@ -428,7 +431,7 @@ import {getTaskProject,getTestApplyById,submitApplication} from '@/api/expertSer
         methods: {
             //获取项目组选项
             async getProjectOption() {
-               let res= await getTaskProject({ operation: "获取项目组数据", failed: true },{}).then(res => {
+               let res= await getTaskProject({ operation: "获取项目组数据", failed: true },{})
                     // console.log(res)
                     if(res.code == 200){
                         this.projectClassifyArr = res.data;
