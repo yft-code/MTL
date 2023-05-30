@@ -1,4 +1,3 @@
-// 
 <template>
     <div class="document-center">
         <div class="banner-div">
@@ -9,7 +8,6 @@
                 <el-menu 
                     :default-active="activeMenu" 
                     :collapse="isCollapse"
-                    
                 >
                     <el-submenu
                         v-for="(item, index) in documentData"
@@ -22,9 +20,9 @@
                         </template>
                         <el-menu-item-group>
                             <a 
-                                class="text-href" 
                                 v-for="(childrenItem, childrenIndex) in item.children"
                                 :key="childrenItem.label"
+                                class="text-href" 
                                 :href="'#' + childrenItem.value" 
                                 @click="changeActive(item.children, childrenIndex)"
                             >
@@ -209,7 +207,7 @@
     }
 </script>
     
-<style scoped>
+<style lang="less" scoped>
     .document-center {
         margin-top: 64px;
         height: calc(100% - 60px);
