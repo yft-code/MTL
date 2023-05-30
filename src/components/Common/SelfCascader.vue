@@ -1,18 +1,17 @@
 <template>
     <div>
         <el-cascader
+            style="width:100%"
+            filterable
             v-model="value" 
             :options="dealOptions"
             :key="cascaderKey"
             :props="{ children: 'children', value: valueKey ? valueKey : 'label', label: 'label', emitPath: false, expandTrigger: 'hover' }"
             :show-all-levels="false" 
             :filter-method="filterMethodCustomize" 
-            filterable
             :popper-class="popperClass"
             :placeholder="placeholder"
-            @change="changeValue"
             :clearable="clearable"
-            style="width:100%"
         >
         </el-cascader>
     </div>
