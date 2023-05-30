@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import serviceAdvantages from '@/components/Common/ServiceAdvantages.vue'
+import serviceAdvantages from '@/components/Common/ServiceAdvantages.vue'
     export default {
         components: {
             serviceAdvantages
