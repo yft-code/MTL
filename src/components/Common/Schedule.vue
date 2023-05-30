@@ -5,7 +5,7 @@
     >
         <div class="schedule-div">
             <div class="legend-div">
-                <span style="font-weight: 700; color: #333333">工作量：</span>
+                <span class="work-word">工作量：</span>
                 <div
                     v-for="(legendItem, index) in legendData"
                     :key="index"
@@ -433,6 +433,7 @@
                     })
                 }
             },
+
             getScheduleClass(state) {
                 if (state === 'free') {
                     return 'free-tag';
@@ -446,6 +447,7 @@
                     return '';
                 }
             },
+
             sendPopo() {
                 popo.singalPopo('dong.xd@corp.netease.com');
             }
@@ -477,6 +479,10 @@
     .legend-label {
         margin: 0 18px 0 8px;
         color: #333333;
+    }
+    .work-word{
+         font-weight: 700; 
+         color: #333333
     }
     .reach-mtl-btn {
         height: 32px;
@@ -580,7 +586,4 @@
         color: #999999;
         padding: 5px 10px;
     }
-</style>
-
-<style>
 </style>
