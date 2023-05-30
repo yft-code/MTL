@@ -63,3 +63,7 @@ export function mobileWeaknetTest(params,messageList) {
 export function pcWeaknetTest(params,messageList) {
     return post('/pcWeaknetTest/expert_test_start/',params,messageList)
 }
+// 发送邮件
+export function sendEmail(url,params,messageList) {
+    return post(url,params,messageList,'formData')
+}
