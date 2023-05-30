@@ -20,7 +20,6 @@
 </template>
 
 <script>
-
     export default {
         components: {
         },
@@ -63,7 +62,7 @@
     }
 </script>
     
-<style scoped>
+<style lang='less' scoped>
     .advantages-div {
         width: 100%;
         position: relative;
@@ -103,7 +102,7 @@
     .advantages-item-content {
         width: 560px;
         height: 130px;
-        background: url('../../assets/img/advantages.png') no-repeat;
+        background: url('~@/assets/img/advantages.png') no-repeat;
         background-position-x: 100%;
         background-position-y: 20px;
     }
