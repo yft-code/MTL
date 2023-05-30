@@ -1,9 +1,5 @@
 <template>
     <div class="sidebar-container">
-        <!-- <div v-if="isCollapse" class="sidebar-title-mini">
-            <img :src="miniLogo">
-        </div>
-        <div v-else class="sidebar-title">专家服务</div> -->
         <el-menu 
             :default-active="activeMenu" 
             :collapse="isCollapse"
@@ -12,7 +8,7 @@
             <div
                 v-for="(menuItem, menuIndex) in sidebarData[curSidebarType]"
                 :key="menuItem.label"
-                >
+            >
                 <!-- 有子菜单的菜单栏 -->
                 <el-submenu v-if="menuItem.children" :index="String(menuIndex)">
                     <template slot="title">
@@ -26,22 +22,24 @@
                                 <span slot="title" style="margin-left: 8px">{{itemChild.label}}</span>
                             </template>
                             <el-menu-item 
-                                v-for="(itemChild_Child, grandSonIndex) in itemChild.children" 
+                                v-for="(itemChild_Child, grandSonIndex) in itemChild.children"
+                                :key="itemChild_Child.label"  
                                 :index="String(menuIndex) + '-' + String(childrenIndex) + '-' + String(grandSonIndex)" 
-                                :key="itemChild_Child.label" 
-                                @click="jumpToPage(itemChild_Child)">
+                                @click="jumpToPage(itemChild_Child)"
+                            >
                                 {{itemChild_Child.label}}
                             </el-menu-item>
                         </el-submenu>
-                        
-                        <el-menu-item v-else :index="String(menuIndex) + '-' + String(childrenIndex)" @click="jumpToPage(itemChild)">
+                        <el-menu-item 
+                            v-else 
+                            :index="String(menuIndex) + '-' + String(childrenIndex)" 
+                            @click="jumpToPage(itemChild)"
+                        >
                             <img :src="itemChild.icon">
                             <span slot="title" style="margin-left: 8px">{{itemChild.label}}</span>
                         </el-menu-item>
                     </div>
-
                 </el-submenu>
-
                 <!-- 没有子菜单的菜单栏 -->
                 <el-menu-item 
                     v-else 
@@ -60,8 +58,6 @@
 
 <script>
     export default {
-        components: {
-        },
         data() {
             return {
                 miniLogo: require('@/assets/img/mtl_logo_mini.png'),
@@ -87,68 +83,15 @@
                                             value: 'performance',
                                             url: '/mtl_test_platform/page/expertServices/performance',
                                             editType: 'add',
-                                        },
-                                        // {
-                                        //     label: '端游性能测试',
-                                        //     value: 'performancePC',
-                                        //     url: '/mtl_test_platform/page/expertServices/performancePC',
-                                        //     editType: 'add',
-                                        // },
-                                //         {
-                                //             label: '手游弱网测试',
-                                //             value: 'weaknet',
-                                //             url: '/mtl_test_platform/page/expertServices/weaknet',
-                                //             editType: 'add',
-                                //         },
-                                //         {
-                                //             label: '端游弱网测试',
-                                //             value: 'weaknetPC',
-                                //             url: '/mtl_test_platform/page/expertServices/weaknetPC',
-                                //             editType: 'add',
-                                //         },
-                                //         // {
-                                //         //     label: '周包性能趋势',
-                                //         //     value: 'weekPerformance',
-                                //         //     url: '/mtl_test_platform/page/weekPerformance',
-                                //         // },
-                                //         // {
-                                //         //     label: '月包性能趋势',
-                                //         //     value: 'monthPerformance',
-                                //         //     url: '/mtl_test_platform/page/monthPerformance',
-                                //         // },
-                                //         // {
-                                //         //     label: '八周性能趋势',
-                                //         //     value: 'eightWeekPerformance',
-                                //         //     url: '/mtl_test_platform/page/eightWeekPerformance',
-                                //         // },
+                                        } 
                                     ]
                                 },
-
-                                // {
-                                //     label: '隐私合规',
-                                //     value: 'privacy',
-                                //     url: '/mtl_test_platform/page/expertServices/privacy',
-                                //     editType: 'add',
-                                // },
-                                
                                 {
                                     label: '协议测试',
                                     value: 'protocol',
                                     url: '/mtl_test_platform/page/expertServices/protocol',
                                     editType: 'add',
                                 },
-                                // {
-                                //     label: 'AppStore预审',
-                                //     value: 'appstore',
-                                //     url: '/mtl_test_platform/page/expertServices/appstore',
-                                //     editType: 'add',
-                                // },
-                                // {
-                                //     label: '版署预审',
-                                //     value: 'preliminary',
-                                //     url: '/mtl_test_platform/page/expertServices/preliminary',
-                                //     editType: 'add',
-                                // },
                             ]
                         },
                         {
@@ -165,34 +108,7 @@
                             icon: require('@/assets/img/specialServices.png'),
                             value: 'myMission',
                             url: '/mtl_test_platform/page/workstation/myMission'
-                        },
-                        // {
-                        //     label: '分配接口人',
-                        //     icon: require('@/assets/img/manager-list.png'),
-                        //     value: 'assignContactPerson',
-                        //     url: '/mtl_test_platform/page/workstation/assignContactPerson'
-                        // },
-
-                        // {
-                        //     label: '产品服务',
-                        //     icon: require('@/assets/img/productServices.png'),
-                        //     children: [
-                        //         {
-                        //             label: 'PEase快速性能',
-                        //             value: "",
-                        //             url: "",
-                        //         },
-                        //         {
-                        //             label: 'NetFree弱网工具',
-                        //         },
-                        //         {
-                        //             label: '自动化测试',
-                        //         },
-                        //         {
-                        //             label: '云真机',
-                        //         }
-                        //     ]
-                        // }
+                        }
                     ]
                 },
                 activeMenu: ''
@@ -214,7 +130,6 @@
                 let type = path.indexOf('expertServices') >= 0 ? 'expertServices' : 'workstation';
                 let queryValue = ""
                 queryValue = path.split('/')[path.split('/').length - 1]
-                // console.log(queryValue)
                 this.activeMenu = '';
                 this.sidebarData[type].forEach((menuItem, menuIndex) => {
                     if (menuItem.value === queryValue || queryValue.indexOf(menuItem.value) !== -1) {
@@ -235,7 +150,6 @@
                         })
                     }
                 });
-                // console.log(type)
                 return type;
             },
             isTester() {
@@ -245,8 +159,7 @@
                 return this.$store.getters.getIsAdmin
             },
         },
-        watch:{
-            
+        watch:{ 
         },
         methods:{
             jumpToPage(item) {
@@ -256,38 +169,12 @@
                 this.$router.push(item.url);
             },
 
-
             // 判断-临时管理员
             checkIsMTL(){
                 if(this.isTester){
-                    // this.sidebarData.expertServices.push({
-                    //     label: '管理员',
-                    //     icon: require('@/assets/img/manager-list.png'),
-                    //     children: [
-                    //         {
-                    //             label: '管理员列表',
-                    //             value: 'managerList',
-                    //             url: '/mtl_test_platform/page/expertServices/managerList',
-                    //         },
-                    //     ]
-                    // })
-
-                    let addList = [
-                        // {
-                        //     label: '周包报告编辑',
-                        //     value: 'weekPackageEdit',
-                        //     url: '/mtl_test_platform/page/weekPackageEdit',
-                        // },
-                        // {
-                        //     label: '月包报告编辑',
-                        //     value: 'monthPackageEdit',
-                        //     url: '/mtl_test_platform/page/monthPackageEdit',
-                        // },
-                    ]
-                    // this.sidebarData.expertServices[0].children[1].children = this.sidebarData.expertServices[0].children[1].children.concat(addList)
+                    let addList = []
                 }
             },
-
 
             judgeAdmin(){
                 if(this.isAdmin){
@@ -321,43 +208,16 @@
                                     label: '电脑设备',
                                     value: 'pcManage',
                                     url: '/mtl_test_platform/page/workstation/pcManage'
-                                },
-                                // {
-                                //     label: '电脑设备组合',
-                                //     value: 'pcPerformance',
-                                //     url: '/mtl_test_platform/page/workstation/pcPerformance'
-                                // },
+                                }
                             ]
                         }
                     )
-
-                    // this.sidebarData.workstation.push(
-                    //     {
-                    //         label: '协议表管理',
-                    //         icon: require('@/assets/img/service_orders_list.png'),
-                    //         value: 'protocolManage',
-                    //         url: '/mtl_test_platform/page/workstation/protocolManage'
-                    //         // children: [
-                    //         //     {
-                    //         //         label: '手机管理',
-                    //         //         value: 'phoneManage',
-                    //         //         url: '/mtl_test_platform/page/workstation/phoneManage'
-                    //         //     },
-                    //         //     {
-                    //         //         label: '电脑管理',
-                    //         //         value: 'pcManage',
-                    //         //         url: '/mtl_test_platform/page/workstation/pcManage'
-                    //         //     },
-                    //         // ]
-                    //     }
-                    // )
                 }
             },
         },
     }
 </script>
-    
-<style scoped>
+<style lang='less' scoped>
     .sidebar-container {
         height: 100%;
         background: #F9FBFF;
@@ -387,14 +247,14 @@
         height: 32px;
         width: 32px;
         margin: 9px 16px;
-        background-image: url('../../assets/img/expander.png');
+        background-image: url('~@/assets/img/expander.png');
         cursor: pointer;
         position: absolute;
         left: 0;
         bottom: 0;
     }
     .sidebar-expander:hover {
-        background-image: url('../../assets/img/expander_hover.png');
+        background-image: url('~@/assets/img/expander_hover.png');
     }
 </style>
 
