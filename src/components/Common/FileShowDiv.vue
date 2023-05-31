@@ -13,12 +13,12 @@
               @mouseenter="showCloseIndex = 'old' + index"
               @mouseleave="showCloseIndex = -1"  
           >
-            <span class="select-name">{{ item }}</span>
-            <i
-                v-if="showCloseIndex == 'old' + index"
-                class="el-icon-close"
-                @click="removeOld(index)"
-            />
+              <span class="select-name">{{ item }}</span>
+              <i
+                  v-if="showCloseIndex == 'old' + index"
+                  class="el-icon-close"
+                  @click="removeOld(index)"
+              />
           </div>
           <div
               v-for="(item, index) in newData"
@@ -27,17 +27,17 @@
               @mouseenter="showCloseIndex = 'new' + index"
               @mouseleave="showCloseIndex = -1"
           >
-            <span class="select-name" v-if="typeof item == 'object'">
-                {{item[fileNameKey]}}
-            </span>
-            <span class="select-name" v-else>
-                {{ item }}
-            </span>
-            <i
-                v-if="showCloseIndex == 'new' + index"
-                class="el-icon-close"
-                @click="removeNew(index)"
-            />
+              <span class="select-name" v-if="typeof item == 'object'">
+                  {{item[fileNameKey]}}
+              </span>
+              <span class="select-name" v-else>
+                  {{ item }}
+              </span>
+              <i
+                  v-if="showCloseIndex == 'new' + index"
+                  class="el-icon-close"
+                  @click="removeNew(index)"
+              />
           </div>
         </div>
     </div>
@@ -53,25 +53,23 @@ export default {
     },
     data() {
         return {
-          nofilePic: require("@/assets/img/emptyState.png"),
-          showCloseIndex: -1,
-      };
+            nofilePic: require("@/assets/img/emptyState.png"),
+            showCloseIndex: -1,
+      }
     },
     computed: {},
     created() {},
     mounted() {},
     methods: {
         removeOld(index) {
-          this.$emit("removeOld", index);
+            this.$emit("removeOld", index);
         },
 
         removeNew(index) {
-          this.$emit("removeNew", index);
+            this.$emit("removeNew", index);
         },
-    },
-
-    watch: {},
-};
+    }
+}
 </script>
 <style lang="less" scoped>
 .file-show-div {
@@ -114,6 +112,6 @@ export default {
                 cursor: pointer;
             }
         }
-    }
+  }
 }
 </style>
