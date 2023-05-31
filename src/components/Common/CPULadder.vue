@@ -12,7 +12,7 @@
             :key="brand" 
             :label="brand" 
             :prop="brand" 
-             align="center"
+            align="center"
         >
             <template v-slot="scope">
                 <div v-for="(item,index) in scope.row[brand]" :key="index">
@@ -39,13 +39,11 @@ export default {
     computed: {
     },
     created() {
-        this.getCPUData()
+        this.getCpuData()
     },
     mounted() {
-
     },
     methods: {
-
         async  getCpuData(){
             let res=await getCpuLadder({},{ operation: "获取CPU天梯数据", failed: true })
             if (res.code == 200) {

@@ -2,30 +2,42 @@
     <div class="edit-picture">
         <self-dialog 
             ref="editPictureRef" 
-            :dialog-data="{ title: '编辑图片', width: '25rem', top: '3rem', confirmName: '确定', closeName: '取消' }" 
+            :dialog-data="{
+                title: '编辑图片',
+                width: '25rem', 
+                top: '3rem', 
+                confirmName: '确定', 
+                closeName: '取消' 
+                }"
             @confirm="confirmMethod">
             <div v-if="oldPictures.length > 0" class="picShow">
-                <div v-for="(item,index) in oldPictures" 
-                     :key="index" 
-                     class="pic-show-item">
+                <div 
+                    v-for="(item,index) in oldPictures" 
+                    :key="index" 
+                    class="pic-show-item"
+                >
                     <self-picture-show :img-path="[item.pic_url]" img-type="thumbnail" />
                     <i class="el-icon-circle-close" @click="removeOldPic(index,item.id)"></i>
                 </div>
             </div>
             <div v-if="previewPics.length > 0" class="picShow">
-                <div v-for="(item,index) in previewPics" :key="index" class="pic-show-item">  
+                <div 
+                    v-for="(item,index) in previewPics" 
+                    :key="index" 
+                    class="pic-show-item"
+                >  
                     <self-picture-show :img-path="[item]" img-type="thumbnail" />
                     <i class="el-icon-circle-close" @click="removePic(index)"></i>
                 </div>
             </div>
             <div style="width:100%;">
                 <upload-file 
-                    ref="uploadFileRef" 
+                    ref="uploadFileRef"
+                    accept-file-type=".jpg,.jpeg,.gif,.png,.bmp,.JPG,.JPEG,.GIF,.PNG,.BMP" 
                     :is-multiple="true"
                     :is-paste-pic="true"
-                    accept-file-type=".jpg,.jpeg,.gif,.png,.bmp,.JPG,.JPEG,.GIF,.PNG,.BMP"
                     :onChangeFunc="changeFile"
-                    />
+                />
             </div>
         </self-dialog>
     </div>
@@ -33,7 +45,7 @@
 <script>
 import uploadFile from 'uploadfile'
 import SelfDialog from '@/components/Common/SelfDialog.vue'
-import {updateExpertTestPicture,updatePicture} from '@/api/common'
+import {updateExpertTestPicturePc,updateExpertTestPicture,updatePicture} from '@/api/common'
 export default {
     components: {
         uploadFile,
@@ -127,14 +139,14 @@ export default {
                     formData.append("picture_list", this.fileListData[i]);
                 }
                 if(this.list.test_type == '11'){
-                     let res=await updateExpertTestPicture({},{ operation: "编辑图片", success: true, failed: true })
+                    let res=await updateExpertTestPicturePc({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
                         }
                         this.$store.commit("setPageIsLoading", false);
                 }else if(this.list.test_type == '10'){
-                   let res=await updateExpertTestPicture({},{ operation: "编辑图片", success: true, failed: true })
+                    let res=await updateExpertTestPicture({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
@@ -142,7 +154,7 @@ export default {
                         this.$store.commit("setPageIsLoading", false);
                 }else if(this.list.test_type == '30'){
                     formData.append("application_id", this.$route.query.id);
-                   let res=await updatePicture({},{ operation: "编辑图片", success: true, failed: true })
+                    let res=await updatePicture({},{ operation: "编辑图片", success: true, failed: true })
                         if (res.code == 200) {
                             this.$emit("afterEdit");
                             this.$refs.editPictureRef.closeDialog();
@@ -162,9 +174,7 @@ export default {
                 this.$refs.editPictureRef.closeDialog();
             }
         }
-
-    },
-
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -172,11 +182,11 @@ export default {
     padding: 0;
     .picShow {
         .pic-show-item {
-            vertical-align: top;
-            width: 360px;
-            margin-bottom: 0.2rem;
             display: inline-block;
             position: relative;
+            width: 360px;
+            margin-bottom: 0.2rem;
+            vertical-align: top; 
             .el-icon-circle-close {
                 position: absolute;
                 right: 0.2rem;

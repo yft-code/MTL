@@ -4,8 +4,12 @@ export function getCpuLadder(params,messageList) {
     return post('/expertCompatibility/get_cpu_ladder/',params,messageList)
   }
 
-export function updateExpertTestPicture(params,messageList) {
+export function updateExpertTestPicturePc(params,messageList) {
     return post('/expertCompatibilityPC/update_expert_test_picture/',params,messageList,'formData')
+} 
+
+export function updateExpertTestPicture(params,messageList) {
+    return post('/expertCompatibility/update_expert_test_picture/',params,messageList,'formData')
 }
 
 export function updatePicture(params,messageList) {

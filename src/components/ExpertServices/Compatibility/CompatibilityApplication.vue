@@ -32,7 +32,13 @@
                     >
                         保存
                     </el-button>
-                    <el-button v-if="editType == 'edit'" size="mini" @click="cancel">取消</el-button>
+                    <el-button 
+                        v-if="editType == 'edit'" 
+                        size="mini" 
+                        @click="cancel"
+                    >
+                    取消
+                    </el-button>
                 </div>
                 <el-form 
                     v-if="canShowForm"
@@ -51,7 +57,13 @@
                         <div class="title-div">
                             <span class="title-span">测试平台</span>
                             <template>
-                                <el-radio v-model="applicationFormList.test_type" label="10" style="margin-left: 15px;">手游</el-radio>
+                                <el-radio
+                                    class="el-radio-margin"
+                                    label="10" 
+                                    v-model="applicationFormList.test_type" 
+                                 >
+                                    手游
+                                 </el-radio>
                                 <el-radio v-model="applicationFormList.test_type" label="11">端游</el-radio>
                             </template>
                             <hr>
@@ -133,7 +145,11 @@
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
-                                    <el-form-item class="line-form-item" label="其他要求" prop="android_other">
+                                    <el-form-item 
+                                        class="line-form-item" 
+                                        label="其他要求" 
+                                        prop="android_other"
+                                    >
                                         <el-input v-model="applicationFormList.android_other" :placeholder="editType == 'read' ? '无': '请输入要求内容'"></el-input>
                                     </el-form-item>
                                 </div>
@@ -1151,9 +1167,6 @@
     .compatibility-application {
         flex: 1;
         width: 100%;
-        /*
-        margin: 20px;
-        */
         border-radius: 4px;
         background: #fff;
         display: flex;
@@ -1250,10 +1263,22 @@
         color: rgba(21, 110, 239, 1);
         font-size: 14px;
     }
-    .case-upload .el-upload, .case-upload .el-upload-dragger, .account-upload .el-upload, .account-upload .el-upload-dragger {
+    .case-upload 
+    .el-upload, 
+    .case-upload 
+    .el-upload-dragger,
+    .account-upload 
+    .el-upload, 
+    .account-upload 
+    .el-upload-dragger {
         width: 100%;
     }
-    .case-upload .el-upload-dragger .el-upload__text, .account-upload .el-upload-dragger .el-upload__text {
+    .case-upload 
+    .el-upload-dragger 
+    .el-upload__text, 
+    .account-upload 
+    .el-upload-dragger 
+    .el-upload__text {
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -1339,6 +1364,9 @@
                 font-size: 16px;
                 font-weight: bold;
                 color: #000;
+            }
+            .el-radio-margin{
+               margin-left: 15px;
             }
             hr {
                 margin-top: -2px;
