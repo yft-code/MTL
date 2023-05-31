@@ -20,23 +20,14 @@
             <div style="display: flex;justify-content: center;">
                 <tool-header/>
             </div>
-            
             <el-main>
                 <router-view></router-view>
-                <!-- <div class="copyright-div">
-                    <div style="font-weight: 700">雷火测试中心</div>
-                    <div style="margin-top: 18px;">网易公司版权所有 ©雷火测试中心 Copyright Leihuo. All Rights Reserved</div>
-                </div> -->
             </el-main>
         </el-container>
     </div>
-    
-
 </template>
-
 <script>
-    import $ from 'jquery'
-    import toolHeader from '@/components/ToolHeader/Index.vue'
+    import toolHeader from '@/components/ToolHeader/index.vue'
     export default {
         data() {
             return {

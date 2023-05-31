@@ -44,8 +44,8 @@ export default {
     mounted() {
     },
     methods: {
-        async  getCpuData(){
-            let res=await getCpuLadder({},{ operation: "获取CPU天梯数据", failed: true })
+        async getCpuData() {
+            let res = await getCpuLadder({}, { operation: "获取CPU天梯数据", failed: true })
             if (res.code == 200) {
                 console.log('Get CPU Ladder Data Success');
                 this.maxLevel = res.data.max_level 

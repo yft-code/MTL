@@ -65,7 +65,7 @@ const getters={
     getPageIsLoading: state => {
         return state.pageIsLoading
     },
-    //获取用户邮箱
+    //获取用户邮箱-
     getUserEmail: state => {
         return state.currentUserEmail;
     },
@@ -73,15 +73,18 @@ const getters={
     getUserAuth: state => {
         return state.currentUserAuth;
     },
+    // -
     getIsTester: state => {
         return state.isTester
     },
+    // -
     getIsAdmin: state => {
         return state.isAdmin
     },
     getProblemFilter: state => {
         return state.problemFilter
     },
+    // --
     getIsContact: state => {
         return state.isContact
     }
