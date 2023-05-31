@@ -1,12 +1,13 @@
 <template>
-    <div class="compatibility-application" :style="$route.path.indexOf('expertServices') !== -1 ? {'margin': '20px',} : {'margin-top': '30px'}">
+    <div 
+        class="compatibility-application" 
+        :style="$route.path.indexOf('expertServices') !== -1 ? {'margin': '20px',} : {'margin-top': '30px'}"
+    >
         <div v-if="$route.path.indexOf('expertServices') !== -1" class="application-title">兼容性测试</div>
-        
         <div class="container">
             <div 
                 v-if="$route.path.indexOf('expertServices') == -1 && (editType=='read' || editType=='edit')" 
-                class="page" 
-                style="padding-left: 20px;margin-bottom:-15px;padding-top:5px"
+                class="page"
             >
                 <span @click="jumpPage()" style="cursor:pointer">我的任务</span>
                 &nbsp;
@@ -16,24 +17,36 @@
             </div>
             <div class="main-container">
                 <div class="area-div" v-if="oldData.edit == 1">
-                    <el-button v-if="editType == 'read'" type="primary" size="mini" @click="editType='edit'">编辑</el-button>
-                    <el-button v-else-if="editType == 'edit'" type="primary" size="mini" @click.stop="submitTestApplication">保存</el-button>
+                    <el-button 
+                        v-if="editType == 'read'" 
+                        type="primary" 
+                        size="mini" 
+                        @click="editType='edit'"
+                    >
+                        编辑
+                    </el-button>
+                    <el-button 
+                        v-else-if="editType == 'edit'" 
+                        type="primary" size="mini" 
+                        @click.stop="submitTestApplication"
+                    >
+                        保存
+                    </el-button>
                     <el-button v-if="editType == 'edit'" size="mini" @click="cancel">取消</el-button>
                 </div>
                 <el-form 
                     v-if="canShowForm"
                     id="applicationForm" 
-                    ref="applicationFormRef" 
+                    ref="applicationFormRef"
+                    label-position="right" 
+                    label-suffix=":"
+                    inline 
                     :disabled="editType == 'read'" 
                     :hide-required-asterisk="editType == 'read'" 
                     :model="applicationFormList" 
                     :rules="applicationFormRules" 
-                    :show-message="false" 
-                    label-position="right" 
-                    label-suffix=":"
-                    inline
-                >
-                    
+                    :show-message="false"  
+                > 
                     <div class="area-div">
                         <div class="title-div">
                             <span class="title-span">测试平台</span>
@@ -45,8 +58,8 @@
                         </div>
                         <div>
                             <div v-if="editType != 'read'">
-                                <div class="application-item-content" style="flex-direction: column; ">
-                                    <div v-if="!pc_flag" style="display: flex; align-items: center;">
+                                <div class="application-item-content">
+                                    <div v-if="!pc_flag" class="application-flag-item">
                                         <div class="platform-tag" @click="changePlatform('android_platform')">
                                             <img :src="applicationFormList.android_platform == 1 ? androidHoverImg : androidImg">
                                             <div>Android</div>
@@ -60,8 +73,7 @@
                                             <div>Android模拟器</div>
                                         </div>
                                     </div>
-
-                                    <div v-else style="display: flex; align-items: center;">
+                                    <div v-else class="application-flag-item">
                                         <div class="platform-tag" @click="changePlatform('pc_platform')">
                                             <img :src="applicationFormList.pc_platform == 1 ? windowsHoverImg : windowsImg">
                                             <div>Windows</div>
@@ -70,8 +82,11 @@
                                 </div>
                             </div>
                             <div 
-                                v-if="!applicationFormList.android_platform && !applicationFormList.ios_platform && !applicationFormList.simulator_platform && !applicationFormList.pc_platform && !applicationFormList.xboxPlatform" 
-                                class="no-platform">
+                                v-if="!applicationFormList.android_platform && !applicationFormList.ios_platform && 
+                                      !applicationFormList.simulator_platform && !applicationFormList.pc_platform && 
+                                      !applicationFormList.xboxPlatform" 
+                                class="no-platform"
+                            >
                                 必须选择至少一个测试平台
                             </div>
                             <div v-if="applicationFormList.android_platform" class="platform-div">
@@ -80,8 +95,19 @@
                                     <el-row>
                                         <el-col :span="6">
                                             <el-form-item label="测试台数" prop="android_num">
-                                                <el-select v-model="applicationFormList.android_num" placeholder="请选择测试台数" allow-create filterable clearable>
-                                                    <el-option v-for="item,index in androidNumOption" :label="item" :value="item" :key="index"></el-option>
+                                                <el-select 
+                                                    placeholder="请选择测试台数" 
+                                                    allow-create 
+                                                    filterable 
+                                                    clearable
+                                                    v-model="applicationFormList.android_num" 
+                                                >
+                                                    <el-option 
+                                                        v-for="item,index in androidNumOption" 
+                                                        :key="index"
+                                                        :label="item" 
+                                                        :value="item" 
+                                                    />
                                                 </el-select>
                                             </el-form-item>
                                         </el-col>
@@ -99,11 +125,11 @@
                                             <el-form-item label="CPU">
                                                 <self-cascader 
                                                     placeholder="请选择CPU"
+                                                    valueKey="value"
                                                     :selectValue.sync="applicationFormList.android_cpu"
                                                     :options="cpuOptions"
                                                     :show-all-levels="false"
-                                                    valueKey="value"
-                                                ></self-cascader>
+                                                />
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
@@ -118,8 +144,19 @@
                                     <el-row>
                                         <el-col :span="6">
                                             <el-form-item label="测试台数" prop="ios_num">
-                                                <el-select v-model="applicationFormList.ios_num" placeholder="请选择测试台数" allow-create filterable clearable>
-                                                    <el-option v-for="item,index in iosNumOption" :label="item" :value="item" :key="index"></el-option>
+                                                <el-select 
+                                                    v-model="applicationFormList.ios_num" 
+                                                    placeholder="请选择测试台数" 
+                                                    allow-create 
+                                                    filterable 
+                                                    clearable
+                                                >
+                                                    <el-option 
+                                                        v-for="item,index in iosNumOption"
+                                                        :key="index" 
+                                                        :label="item" 
+                                                        :value="item" 
+                                                    />
                                                 </el-select>
                                             </el-form-item>
                                         </el-col>
@@ -154,7 +191,9 @@
                                             type="primary"
                                             size="mini"
                                             @click="checkedAllOrCancel(isSimulatorCheckedAll ? 0 : 1)"
-                                        >{{ isSimulatorCheckedAll ? "取消全选" : "&emsp;全选&emsp; " }}</el-button>
+                                        >
+                                            {{ isSimulatorCheckedAll ? "取消全选" : "&emsp;全选&emsp; " }}
+                                        </el-button>
                                         <div class="simulator-check-group">
                                             <el-checkbox 
                                                 v-for="(item, index) in applicationFormList.simulatorList"
@@ -163,9 +202,10 @@
                                                 :true-label="1" 
                                                 :false-label="0"
                                                 @change="judgeSimulatorIsAllChecked"
-                                            >{{ item.label }}</el-checkbox>
+                                            >
+                                                {{ item.label }}
+                                            </el-checkbox>
                                         </div>
-                                        
                                     </div>
                                     <el-form-item class="line-form-item" label="其他" prop="other_simulator">
                                         <el-input v-model="applicationFormList.other_simulator" :placeholder="editType == 'read' ? '无': '请输入其他模拟器'"></el-input>
@@ -191,7 +231,7 @@
                     <div class="area-div">
                         <div class="title-div">
                             <span class="title-span">基础信息</span>
-                            <hr>
+                            <hr/>
                         </div>
                     </div>
                     <div>
@@ -233,13 +273,15 @@
                             class="short-form-item" 
                             label="项目代号" 
                             style="display:none"
-                            prop="project">
+                            prop="project"
+                        >
                             <el-input v-model="applicationFormList.project" disabled></el-input>
                         </el-form-item>
                         <el-form-item 
-                            :class="{ 'short-form-item': true, 'right-form-item': editType == 'add' || editType == 'reAdd' }" 
                             label="包体版本" 
-                            prop="test_version">
+                            prop="test_version"
+                            :class="{ 'short-form-item': true, 'right-form-item': editType == 'add' || editType == 'reAdd' }" 
+                        >
                             <el-input v-model="applicationFormList.test_version" placeholder="请输入包体版本"></el-input>
                         </el-form-item>
                         <el-form-item 
@@ -251,25 +293,30 @@
                         </el-form-item>
                         <el-form-item class="short-form-item right-form-item end-date-item" label="最迟报告日期" prop="end_date">
                             <el-date-picker
-                                v-model="applicationFormList.end_date"
                                 type="date"
                                 value-format="yyyy-MM-dd"
                                 placeholder="请选择最迟报告日期"
-                                @change="checkEndDate('end_date')">
-                            </el-date-picker>
+                                v-model="applicationFormList.end_date"
+                                @change="checkEndDate('end_date')"
+                            />
                         </el-form-item>
                         <el-form-item 
                             v-if="editType == 'add' || editType == 'reAdd'" 
                             class="short-form-item contact-person-item" 
                             label="接口人" 
-                            prop="contact_person">
+                            prop="contact_person"
+                        >
                             <el-input v-model="applicationFormList.contact_person" placeholder="请输入接口人"></el-input>
                         </el-form-item>
                         <el-form-item class="line-form-item" label="测试原因" prop="test_reason">
                             <el-input v-model="applicationFormList.test_reason" placeholder="请输入测试原因"></el-input>
                         </el-form-item>
-                        <el-form-item v-if="pc_flag"
-                            label="服务器" class="line-form-item" prop="server">
+                        <el-form-item 
+                            v-if="pc_flag"
+                            label="服务器" 
+                            class="line-form-item" 
+                            prop="server"
+                        >
                             <el-input v-model="applicationFormList.server" placeholder="请输入测试服务器"></el-input>
                         </el-form-item>
                     </div>
@@ -281,13 +328,17 @@
                                     <hr>
                                 </div>
                                 <div style="width:100%;">
-                                    <input-and-upload v-if="editType!='read'" ref="testCaseRef" :select-data="testCaseData"/>
+                                    <input-and-upload 
+                                        v-if="editType!='read'" 
+                                        ref="testCaseRef" 
+                                        :select-data="testCaseData"
+                                    />
                                     <div v-else>
                                         <input-and-upload-read 
                                             :text="oldData.test_case" 
                                             :file="oldData.test_case_file" 
                                             :fileSuffix="prePath.testCase" 
-                                            />
+                                        />
                                     </div>
                                 </div>
                             </div>  
@@ -304,14 +355,14 @@
                                         ref="testInclusionsRef" 
                                         :select-data="testInclusionsData" 
                                         :project="applicationFormList.project"
-                                        />
+                                    />
                                     <div v-else>
                                         <input-and-upload-read 
                                             :text="oldData.test_inclusions_other" 
                                             :file="oldData.test_inclusions_file" 
                                             :history-file="oldData.test_history_inclusions"
                                             :fileSuffix="prePath.testInclusion" 
-                                            />
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -341,28 +392,20 @@
                 :disabled="isSubmit"
                 @click.stop="submitTestApplication"
                 v-if="editType == 'add' || editType == 'edit' || editType == 'reAdd'"
-                >
+            >
                 提交
             </el-button>
-            <!-- <el-button
-                class="staging-btn"
-                v-if="editType == 'add' || editType == 'edit' || editType == 'reAdd'"
-            >
-                暂存
-            </el-button> -->
         </div>
     </div>
 </template>
-
 <script>
     import packageUpload from '@/components/Common/PackageUpload.vue'
     import schedule from '@/components/Common/Schedule.vue'
     import InputAndUploadRead from "@/components/Common/InputAndUploadRead.vue"
     import InputAndUpload from "@/components/Common/InputAndUpload.vue"
     import SelfCascader from "@/components/Common/SelfCascader.vue"
-    import axios from 'axios'
     import formRule from "@/utils/formRule.js"
-
+    import {submitApplication} from "@/api/expertServices"
     export default {
         components: {
             packageUpload,
@@ -417,7 +460,6 @@
                 testInclusionsData: {
                     radioOption: [
                         { value: "textarea", label: "下载链接" },
-                        // { value: "history", label: "历史包体" },
                         { value: "file", label: "本地上传" },
                     ],
                     selectDict: {
@@ -458,7 +500,8 @@
                 },
                 // 申请数据
                 isSimulatorCheckedAll: 0,
-                editType: "add",//add(新增),read(查看),edit(修改),reAdd(复测)，add没有id，其他三种模式都需要id，从id中获取到已有的申请数据
+                // add(新增),read(查看),edit(修改),reAdd(复测)，add没有id，其他三种模式都需要id，从id中获取到已有的申请数据
+                editType: "add",
                 accountfileList: [],
                 casefileList: [],
                 packageAcceptList: '.apk,.ipa,.exe,.zip,.rar',
@@ -466,10 +509,8 @@
                 caseAcceptList: '.doc,.txt,.zip,.rar',
                 applicationFormRules: {
                     project: [{ required: true, message: '请输入项目代号', validator: formRule.validateStr, trigger: 'blur' }],
-                    // project_name: [{ required: true, message: '请选择项目名称', validator: formRule.validateStr, trigger: 'blur' }],
                     test_version:[{required:true, message: '请输入包体版本', validator: formRule.validateStr, trigger: 'blur'}],
                     test_reason: [{required: true, message: '请输入测试原因', validator: formRule.validateStr, trigger: 'blur'}],
-                    // device_num: [{ required: true, message: '请输入期望测试设备数', validator: formRule.necessaryIntNumber, trigger: 'blur' }],
                     single_time: [{required: true, message: '请输入时间', validator: formRule.necessaryIntNumber, trigger: 'blur'}],
                     end_date: [{ required: true, message: '请输入最迟报告日期', trigger: 'change' }],
                     contact_person: [{ required: true, message: '请输入测试联系人', validator: formRule.validateStr, trigger: 'blur' }],
@@ -477,50 +518,62 @@
                     android_os: [{ required: true, message:'请输入Android测试台数', trigger: 'blur' }],
                     android_num: [{ required: true, message:'请输入iOS测试台数', trigger: 'blur' }],
                     ios_num: [{ required: true, message:'请输入系统版本', validator: formRule.validateStr, trigger: 'blur' }],
-                    // android_ram: [{ required: true, message:'请输入内存', validator: formRule.validateStr, trigger: 'blur' }],
-                    // ios_model: [{ required: true, message:'请输入测试机型', validator: formRule.validateStr, trigger: 'blur' }],
-                    // ios_os: [{ required: true, message:'请输入系统版本', validator: formRule.validateStr, trigger: 'blur' }],
-                    // pc_cpu_model: [{ required: true, message: '请输入处理器型号', validator: formRule.validateStr, trigger: 'blur' }],
-                    // pc_gpu_model: [{ required: true, message: '请输入显卡型号', validator: formRule.validateStr, trigger: 'blur' }],
                     test_type: [{ required: true, message: '请选择是否手游', validator: formRule.validateStr, trigger: 'blur' }]
                 },
                 projectData: [],
                 applicationFormList: {
                     android_cpu: "",
                     ipad_need: "0",
-                    test_type: '10',    // 测试类型
-                    project: '',    // 项目代号project
-                    project_name: [],    // 项目名称project_name
-                    test_version:"",    //包体版本test_version
-                    test_reason: '',    //测试原因test_reason
-                    // device_num: 30,   //期望测试设备数device_num
-                    single_time: 40,    //单台测试时间single_time
-                    end_date: '',   // 最迟报告日期end_date
-                    contact_person: '',  // 接口人contact_person
-                    android_platform: 1, // 安卓平台android_platform
-                    ios_platform: 1, // ios平台ios_platform
-                    simulatorList: [],  
-                    simulator_platform: 1, // Android模拟器simulator_platform
-                    pc_platform: 0,  // PC平台pc_platform
-                    android_os: "Android 5",//安卓系统版本
+                    // 测试类型
+                    test_type: '10',
+                    // 项目代号project   
+                    project: '',
+                    // 项目名称project_name    
+                    project_name: [],
+                    //包体版本test_version   
+                    test_version:"",
+                    //测试原因test_reason    
+                    test_reason: '',
+                    //单台测试时间single_time    
+                    single_time: 40,
+                    // 最迟报告日期end_date    
+                    end_date: '', 
+                    // 接口人contact_person  
+                    contact_person: '',
+                    // 安卓平台android_platform  
+                    android_platform: 1, 
+                    // ios平台ios_platform
+                    ios_platform: 1, 
+                    simulatorList: [],
+                    // Android模拟器simulator_platform  
+                    simulator_platform: 1,
+                    // PC平台pc_platform 
+                    pc_platform: 0,  
+                    //安卓系统版本
+                    android_os: "Android 5",
                     android_num: "",
                     ios_num: "",
-                    android_ram: "2G",//安卓内存
-                    android_other: "", // 安卓其他要求android_other
-                    ios_model: "iPhone 8P",//IOS测试机型
-                    ios_os: "iOS 9",//IOS系统版本
-                    ios_other: "",//IOS其他要求
-                    other_simulator: "",//其他模拟器
-                    pc_cpu_model: "", //PC处理器
-                    pc_gpu_model: "", //PC显卡
+                    //安卓内存
+                    android_ram: "2G",
+                    // 安卓其他要求android_other
+                    android_other: "",
+                    //IOS测试机型 
+                    ios_model: "iPhone 8P",
+                    //IOS系统版本
+                    ios_os: "iOS 9",
+                    //IOS其他要求
+                    ios_other: "",
+                    //其他模拟器
+                    other_simulator: "",
+                    //PC处理器
+                    pc_cpu_model: "", 
+                    //PC显卡
+                    pc_gpu_model: "", 
                     server: "任意服务器",
-                    // xboxPlatform: 0,        // xbox暂且没有用上
-                    // isProvideAccount: 0,
-                    // isProvideCase: 0,
-                    remarks: "",    // 备注
-                    login_server: "",//登录服务器
-                    // accountData: [],
-                    // caseData: []
+                    // 备注
+                    remarks: "",
+                    //登录服务器   
+                    login_server: "",
                 },
                 androidImg: require('@/assets/img/android.png'),
                 androidHoverImg: require('@/assets/img/android_hover.png'),
@@ -540,7 +593,6 @@
         },
         created(){
             this.getData();
-            // console.log(this.editType)
         },
         mounted(){
             
@@ -580,46 +632,63 @@
                         this.pc_flag = 0
                     }
                 },
-                deep:true //为true，表示深度监听，这时候就能监测到a值变化
+                //为true，表示深度监听，这时候就能监测到a值变化
+                deep:true 
             },
             $route(to, from) {
                 if(to.path == "/mtl_test_platform/page/expertServices/compatibility"){
                     // 表单数据清空
-                    // this.$refs.applicationFormRef.resetFields()
                     this.applicationFormList = {
-                        test_type: '10',    // 测试类型
-                        project: '',    // 项目代号project
-                        project_name: [],    // 项目名称project_name
-                        test_version:"",    //包体版本test_version
-                        test_reason: '',    //测试原因test_reason
-                        // device_num: 30,   //期望测试设备数device_num
-                        single_time: 40,    //单台测试时间single_time
-                        end_date: '',   // 最迟报告日期end_date
-                        contact_person: '',  // 接口人contact_person
-                        android_platform: 1, // 安卓平台android_platform
-                        ios_platform: 1, // ios平台ios_platform
+                        //测试类型
+                        test_type: '10',
+                        //项目代号project 
+                        project: '',
+                        // 项目名称project_name    
+                        project_name: [],
+                        //包体版本test_version    
+                        test_version:"",
+                         //测试原因test_reason    
+                        test_reason: '',
+                        //单台测试时间single_time   
+                        single_time: 40,
+                        // 最迟报告日期end_date    
+                        end_date: '', 
+                        // 接口人contact_person  
+                        contact_person: '',
+                        // 安卓平台android_platform  
+                        android_platform: 1,
+                        // ios平台ios_platform 
+                        ios_platform: 1, 
                         android_num: "",
                         server: "任意服务器",
                         ios_num: "",
-                        simulatorList: [],  
-                        simulator_platform: 0, // Android模拟器simulator_platform
-                        pc_platform: 0,  // PC平台pc_platform
-                        android_os: "",//安卓系统版本
-                        android_ram: "",//安卓内存
-                        android_other: "", // 安卓其他要求android_other
-                        ios_model: "",//IOS测试机型
-                        ios_os: "",//IOS系统版本
-                        ios_other: "",//IOS其他要求
-                        other_simulator: "",//其他模拟器
-                        pc_cpu_model: "", //PC处理器
-                        pc_gpu_model: "", //PC显卡
-                        // xboxPlatform: 0,        // xbox暂且没有用上
-                        // isProvideAccount: 0,
-                        // isProvideCase: 0,
-                        remarks: "",    // 备注
-                        login_server: "",//登录服务器
-                        // accountData: [],
-                        // caseData: []
+                        simulatorList: [], 
+                        // Android模拟器simulator_platform 
+                        simulator_platform: 0, 
+                        // PC平台pc_platform
+                        pc_platform: 0,  
+                        //安卓系统版本
+                        android_os: "",
+                        //安卓内存
+                        android_ram: "",
+                        // 安卓其他要求android_other
+                        android_other: "", 
+                        //IOS测试机型
+                        ios_model: "",
+                        //IOS系统版本
+                        ios_os: "",
+                        //IOS其他要求
+                        ios_other: "",
+                        //其他模拟器
+                        other_simulator: "",
+                        //PC处理器
+                        pc_cpu_model: "", 
+                        //PC显卡
+                        pc_gpu_model: "", 
+                        // 备注
+                        remarks: "",
+                        //登录服务器   
+                        login_server: "",
                     },
                     this.editType = "add";
                     // 重新获取数据
@@ -643,53 +712,10 @@
 
             //校验最迟报告日期
             checkEndDate(checkItem) {
-                // if(checkItem != "end_date"){
-                //     let hasError = this.checkNumber(checkItem);
-                //     if(hasError){
-                //         this.dateRelatedError(checkItem);
-                //     }else{
-                //         this.judgeEndData();
-                //     }
-                // }else{
-                //     let singleTimeError = this.checkNumber("single_time");
-                //     let deviceNumError = this.checkNumber("device_num");
-                //     if(singleTimeError && deviceNumError){
-                //          this.$message.error("请先完成申请人预估单台测试时间和期望测试设备数的填写！");
-                //          this.$set(this.applicationFormList, "end_date", "");
-                //     }else if(singleTimeError){
-                //         this.dateRelatedError("single_time");
-                //     }else if(deviceNumError){
-                //         this.dateRelatedError("device_num");
-                //     }else{
-                //         this.judgeEndData();
-                //     }
-                // }   
             },
             //让后台校验最迟报告日期
             judgeEndData(){
-                // if(this.applicationFormList.end_date != ""){
-                //     let list = {
-                //         end_date: this.applicationFormList.end_date,
-                //         single_time: this.applicationFormList.single_time,
-                //         device_num: this.applicationFormList.device_num
-                //     }
-                //     if (this.editType == "edit") {
-                //         list.start_date = this.oldData.start_date;
-                //         list.test_type = 1;
-                //         list.id = this.applicationId;
-                //     }
-                //     this.$codePost("/service/judge_end_date/", list, { operation: "检查最迟报告日期", failed: true }).then(res => {
-                //         if (res.code == 200) {
-                //             if (!res.data) {
-                //                 //最迟报告日期难以完成时，提醒并将值置空
-                //                 this.$message.error(res.msg);
-                //                 this.$set(this.applicationFormList, "end_date", "");
-                //             }
-                //         }
-                //     })
-                // }
             },
-
             // 最迟报告日期相关项错误处理
             dateRelatedError(checkItem){
                 if(checkItem == "single_time"){
@@ -736,14 +762,7 @@
                     //新的申请
                     postApp = "/service/insert_test_apply";
                     operation = "申请";
-                }
-                // for (var [a, b] of applicationFormList.entries()) {
-                //     console.log(a, b, '--------------');
-                // }
-                // setTimeout(() => {
-                //     this.isSubmit = false;
-                // }, 3000)
-                
+                } 
                 this.$formPost(postApp + "/", applicationFormList, { operation: operation, success: true, failed: true }).then(res => {
                     this.isSubmit = false;
                     this.$store.commit("setPageIsLoading", false);
@@ -1179,6 +1198,11 @@
         padding: 20px 0;
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .application-flag-item{
+        display: flex; 
+        align-items: center;
     }
     .application-item-content .el-form-item {
         margin-right: 67px;
@@ -1281,6 +1305,7 @@
 .page {
     margin-top: 1.5rem;
     margin-left: 0.5rem;
+    padding:5px 0 -15px 20px;
 }
 
 .main-container {

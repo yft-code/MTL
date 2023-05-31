@@ -3,7 +3,7 @@ import store from "./store";
 import Router from "vue-router";
 import mtlIndex from "@/views/MtlTestPlatform.vue";
 import mtlIndexWithoutHead from "@/views/MtlTestPlatformWithoutHead.vue"
-import index from "@/views/HomePageIndex.vue";
+import index from "@/components/HomePageItem/index.vue";
 import expertServices from '@/components/ExpertServices/Index.vue'
 import expertCompatibility from '@/components/ExpertServices/Compatibility/index.vue'
 import performance from '@/components/ExpertServices/Performance/index.vue'
@@ -14,7 +14,7 @@ import weaknet from '@/components/ExpertServices/Weaknet/index.vue'
 import weaknetPC from '@/components/ExpertServices/weaknetPC/index.vue'
 import preliminary from '@/components/ExpertServices/Preliminary/index.vue'
 import appstore from '@/components/ExpertServices/Appstore/index.vue'
-import workstation from '@/views/WorkStation/index.vue'
+import workstation from '@/components/WorkStationItem/index.vue'
 import documentCenter from '@/components/DocumentCenter/Index.vue'
 import workTimeCounter from '@/components/WorkTimeCounter/Index.vue'
 import CPULadder from '@/components/Common/CPULadder.vue'
@@ -51,10 +51,10 @@ import StartTestWeaknetPC from '@/components/StartTest/WeaknetPC/StartTest'
 import WeaknetTestReport from '@/components/TestReport/WeaknetTestReport/WeaknetTestReport'
 import WeaknetPCTestReport from '@/components/TestReport/WeaknetPCTestReport/WeaknetPCTestReport'
 import ProtocolTestReport from '@/components/TestReport/ProtocolTestReport/ProtocolTestReport'
-import MyTask from '@/views/WorkStation/MyTask.vue'
-import AssignContactPerson from '@/views/WorkStation/AssignContactPerson.vue'
-import PcManage from '@/views/WorkStation/DeviceManage/PcManage.vue'
-import PhoneManage from '@/views/WorkStation/DeviceManage/PhoneManage.vue'
+import MyTask from '@/components/WorkStationItem/MyTask.vue'
+import AssignContactPerson from '@/components/WorkStationItem/AssignContactPerson.vue'
+import PcManage from '@/components/WorkStationItem/PcManage.vue'
+import PhoneManage from '@/components/WorkStationItem/PhoneManage.vue'
 import StartTestProtocol from '@/components/StartTest/Protocol/StartTest.vue'
 import ProtocolManage from '@/components/WorkStationItem/ProtocolManage'
 import PcPerformance from '@/components/WorkStationItem/PcPerformance'

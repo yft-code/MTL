@@ -24,7 +24,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import productContent from "@/components/HomePageItem/ProductContentItem.vue";
 import solutionContent from "@/components/HomePageItem/SolutionContentItem.vue";
